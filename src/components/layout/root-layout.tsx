@@ -4,8 +4,8 @@ const font = Figtree({ subsets: ['latin'] })
 
 // root layout for all pages
 
-function Layout({ children }: { children: React.ReactNode }) {
+function RootLayout({ children }: { children: React.ReactNode }) {
   return <main className={font.className}>{children}</main>
 }
 
-export default Layout
+export { RootLayout } 
