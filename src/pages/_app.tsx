@@ -1,11 +1,12 @@
-import Layout from '@/components/layout'
+import { RootLayout } from '@/components/layout/root-layout'
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { SessionProvider } from 'next-auth/react'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
+    <RootLayout>
       <Head>
         <title>Chat App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,7 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
           content="Chat App takes the best Discord features and provides them to user in in a simplified and minimalist way"
         />
       </Head>
-      <Component {...pageProps} />
-    </Layout>
+      <SessionProvider session={pageProps.session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+    </RootLayout>
   )
 }
