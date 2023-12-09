@@ -25,25 +25,14 @@ model User {
   email           String  @unique
   password        String
   username        String
-  isEmailVerified Boolean @default(false)
   imageUrl        String? @db.Text
 
   servers         Server[]
   members         Member[]
   channels        Channel[]
-  activationToken ActivationToken?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model ActivationToken {
-  id          String    @id @default(uuid())
-  token       String    @unique
-  activatedAt DateTime?
-
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Server {
