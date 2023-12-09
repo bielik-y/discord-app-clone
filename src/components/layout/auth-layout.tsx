@@ -1,11 +1,13 @@
 import React from 'react'
+import { ModeToggle } from '@/components/mode-toggle'
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen items-center justify-center bg-slate-50">
-      <div className="m-4 w-full rounded-lg bg-white p-8 sm:max-w-md sm:shadow-sm">
+    <div className="flex h-screen items-center justify-center bg-popover">
+      <div className="m-4 w-full rounded-lg bg-background p-8 border dark:border-0 sm:max-w-md">
         {children}
       </div>
+      <ModeToggle />
     </div>
   )
 }

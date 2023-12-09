@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils'
 import SyncLoader from 'react-spinners/SyncLoader'
 import colors from 'tailwindcss/colors'
 
@@ -9,10 +8,10 @@ function LoadingOverlay({ loading }: { loading: boolean }) {
     <div
       {...(loading && {
         className:
-          'absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-white opacity-70'
+          'absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center opacity-70 bg-background'
       })}
     >
-      <SyncLoader color={colors.indigo['400']} loading={loading} size={6} />
+      <SyncLoader color={colors.indigo['500']} loading={loading} size={6} />
     </div>
   )
 }

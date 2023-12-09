@@ -82,7 +82,7 @@ function LoginForm({ switchModeHandler }: { switchModeHandler: () => void }) {
           <span>{`Don't have an account?`} </span>
           <button
             onClick={switchModeHandler}
-            className="text-blue-600 underline"
+            className="text-indigo-500 underline"
           >
             Create account
           </button>
