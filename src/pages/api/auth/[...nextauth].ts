@@ -30,13 +30,34 @@ export const authOptions: NextAuthOptions = {
           )
           if (!isPasswordValid) return null
 
-          return {
-            id: user.id,
-            email: user.email,
-            username: user.username,
-            isEmailVerified: user.isEmailVerified,
-            imageUrl: user.imageUrl
-          } as any
+          const server = await db.server.findFirst({
+            where: {
+              members: {
+                some: {
+                  userId: user.id
+                }
+              }
+            }
+          })
+
+          console.log('k', server)
+
+          // For user navigation: if server exists show server page otherwise setup page
+          if (server)
+            return {
+              id: user.id,
+              email: user.email,
+              username: user.username,
+              imageUrl: user.imageUrl,
+              server: server.id
+            } as any
+          else
+            return {
+              id: user.id,
+              email: user.email,
+              username: user.username,
+              imageUrl: user.imageUrl
+            } as any
           // 'as any' resolves next-auth types bug https://github.com/nextauthjs/next-auth/issues/2701#issuecomment-1537189138
         } catch (err) {
           console.log(err)
@@ -45,15 +66,23 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+  session: {
+    strategy: 'jwt'
+  },
   callbacks: {
     // Add custom user field into JWT
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      // Update user session with new data
+      if (trigger === 'update' && session.server) {
+        token.server = session.server
+      }
       if (user) {
         return {
           ...token,
+          id: user.id,
           username: user.username,
-          isEmailVerified: user.isEmailVerified,
-          imageUrl: user.imageUrl
+          imageUrl: user.imageUrl,
+          server: user.server
         }
       }
       return token
@@ -64,9 +93,10 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
+          id: token.id,
           username: token.username,
-          isEmailVerified: token.isEmailVerified,
-          imageUrl: token.imageUrl
+          imageUrl: token.imageUrl,
+          server: token.server
         }
       }
     }

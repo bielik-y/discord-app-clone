@@ -7,7 +7,6 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
       <div className="m-4 w-full rounded-lg bg-background p-8 border dark:border-0 sm:max-w-md">
         {children}
       </div>
-      <ModeToggle />
     </div>
   )
 }

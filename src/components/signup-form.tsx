@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { useState } from 'react';
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { registerSchema, RegisterSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { LoadingOverlay } from '@/components/layout/loading-overlay';
+import { LoadingOverlay } from '@/components/layout/loading-overlay'
 import {
   Form,
   FormControl,
@@ -32,14 +32,11 @@ function SignUpForm({ switchModeHandler }: { switchModeHandler: () => void }) {
   async function onSubmit(values: RegisterSchema) {
     try {
       setIsLoading(true)
-      const { data } = await axios.post('/api/auth/signup', values)
-      console.log('success', data)
+      await axios.post('/api/auth/signup', values)
       switchModeHandler()
     } catch (err: any) {
       if (err.response) {
-        console.log(err.response.data)
-        console.log(err.response.status)
-        console.log(err.response.headers)
+        console.log(err.response)
       } else if (err.request) {
         console.log(err.request)
       } else {

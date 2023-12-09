@@ -14,3 +14,11 @@ export const loginSchema = z.object({
 })
 
 export type LoginSchema = z.infer<typeof loginSchema>
+
+
+export const serverSchema = z.object({
+  name: z.string().min(1, 'Server name is required').max(40, 'Name should be less than 40 characters'),
+  imageUrl: z.string().min(1, 'Server image is required')
+})
+
+export type ServerSchema = z.infer<typeof serverSchema>

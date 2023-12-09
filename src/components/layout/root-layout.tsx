@@ -1,5 +1,4 @@
 import { Figtree } from 'next/font/google'
-
 const font = Figtree({ subsets: ['latin'] })
 
 // root layout for all pages

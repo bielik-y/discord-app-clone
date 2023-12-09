@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import { ThemeProvider } from 'next-themes'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { ModeToggle } from '@/components/mode-toggle'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -24,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
           storageKey="chat-app-theme"
         >
           <Component {...pageProps} />
+          <ModeToggle />
         </ThemeProvider>
       </SessionProvider>
     </RootLayout>
