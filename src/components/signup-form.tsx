@@ -105,7 +105,7 @@ function SignUpForm({ switchModeHandler }: { switchModeHandler: () => void }) {
           <span>Already have an account? </span>
           <button
             onClick={switchModeHandler}
-            className="text-indigo-600 underline"
+            className="text-indigo-light underline"
           >
             Log In
           </button>

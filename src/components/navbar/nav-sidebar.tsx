@@ -50,6 +50,7 @@ function NavSidebar() {
             />
           </div>
         ))}
+        {/* // Server with no data in db */}
         <div key={'kkk'} className="mb-4">
           <NavItem
             serverId={'mmm'}

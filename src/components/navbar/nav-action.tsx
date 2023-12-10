@@ -14,7 +14,7 @@ function NavAction({ action, label, onClick }: NavActionProps) {
       <button className="group flex items-center" onClick={onClick}>
         <div className="mx-3 flex  h-12 w-12 items-center justify-center overflow-hidden rounded-[24px] bg-neutral-200 transition-all group-hover:rounded-[16px] group-hover:bg-indigo-600 dark:bg-neutral-700">
           {action === 'add' && (
-            <Plus className="text-indigo-600 transition group-hover:text-white" />
+            <Plus className="text-indigo transition group-hover:text-white" />
           )}
           {action === 'logout' && (
             <LogOut className="text-primary transition group-hover:text-white" />
