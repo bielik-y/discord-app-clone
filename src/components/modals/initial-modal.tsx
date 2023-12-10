@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { InitialForm } from '@/components/initial-form'
+import { InitialForm } from '@/components/forms/initial-form'
 import {
   Dialog,
   DialogContent,
@@ -9,16 +9,16 @@ import {
 } from '@/components/ui/dialog'
 
 function InitialModal() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   // Prevent hydration error caused by modal window
   useEffect(() => {
-    setIsOpen(true)
+    setIsMounted(true)
   }, [])
 
   return (
-    <Dialog open={isOpen}>
-      <DialogContent>
+    <Dialog open={isMounted}>
+      <DialogContent hasCloseButton={false}>
         <DialogHeader className="px-8 pt-8">
           <DialogTitle className="text-center text-2xl">
             Customize your server
