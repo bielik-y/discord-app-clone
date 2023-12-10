@@ -4,7 +4,7 @@ import { SignUpForm } from '@/components/signup-form'
 import { useEffect, useState, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { LoadingOverlay } from '@/components/layout/loading-overlay'
+import { LoadingOverlay } from '@/components/loading-overlay'
 
 export default function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true)

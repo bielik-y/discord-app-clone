@@ -6,7 +6,7 @@ import { loginSchema, LoginSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { LoadingOverlay } from '@/components/layout/loading-overlay';
+import { LoadingOverlay } from '@/components/loading-overlay';
 import {
   Form,
   FormControl,

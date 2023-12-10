@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FileUpload } from '@/components/file-upload'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { LoadingOverlay } from '@/components/layout/loading-overlay'
+import { LoadingOverlay } from '@/components/loading-overlay'
 import {
   Form,
   FormControl,
@@ -39,7 +39,7 @@ function InitialForm() {
     try {
       const { data } = await axios.post('/api/server', values)
       await updateSession(data.serverId)
-      router.replace(`/server/${data.serverId}`)
+      router.replace(`/servers/${data.serverId}`)
     } catch (err: any) {
       if (err.response) {
         console.log(err.response)

@@ -34,4 +34,4 @@ function InitialModal() {
   )
 }
 
-export default InitialModal
+export { InitialModal }
