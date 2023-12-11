@@ -1,6 +1,6 @@
 import { Plus } from 'lucide-react'
 import { LogOut } from 'lucide-react'
-import { ActionTooltip } from '@/components/navbar/action-tooltip'
+import { ActionTooltip } from '@/components/action-tooltip'
 
 interface NavActionProps {
   action: 'add' | 'logout'

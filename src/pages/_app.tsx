@@ -1,11 +1,12 @@
 import '@/styles/globals.css'
 import Head from 'next/head'
+import type { AppProps } from 'next/app'
+import type { NextPage } from 'next'
 import { RootLayout } from '@/components/layout/root-layout'
 import { ModeToggle } from '@/components/mode-toggle'
 import { SessionProvider } from 'next-auth/react'
 import { ThemeProvider } from 'next-themes'
-import type { AppProps } from 'next/app'
-import type { NextPage } from 'next'
+import { ModalProvider } from '@/components/providers/modal-provider'
 
 // Logic for shared layouts in Page router (prevents layout rerenders)
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           storageKey="chat-app-theme"
         >
           <Component {...pageProps} />
+          <ModalProvider/>
           <ModeToggle />
         </ThemeProvider>
       </SessionProvider>

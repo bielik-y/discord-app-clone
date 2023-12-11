@@ -17,3 +17,16 @@ export async function getServerById(serverId: string) {
   })
   return server
 }
+
+export async function getFirstServer(userId: string) {
+  const server = await db.server.findFirst({
+    where: {
+      members: {
+        some: {
+          userId: userId
+        }
+      }
+    }
+  })
+  return server
+}

@@ -1,36 +1,33 @@
-import axios from 'axios'
-import { Server } from '@/types/models'
 import { signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { NavAction } from '@/components/navbar/nav-action'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { NavItem } from '@/components/navbar/nav-item'
+import { useModal } from '@/hooks/use-modal-store'
+import { useServerStore } from '@/hooks/use-server-store'
 
 function NavSidebar() {
-  const [servers, setServers] = useState<Server[]>([])
-  const router = useRouter()
+  const { servers, update } = useServerStore()
+  const { onOpen } = useModal()
 
   const getServers = useCallback(async () => {
     try {
-      const { data } = await axios.get('/api/server')
-      if (!data.servers || !data.servers.length) router.replace('/')
-      setServers(data.servers)
+      update()
     } catch (err) {
       console.log(err)
     }
-  }, [router])
+  }, [update])
 
   useEffect(() => {
     getServers()
   }, [getServers])
 
   function handleAddServerClick() {
-    // Create server logic
+    onOpen('createServer')
   }
 
-  if (!servers.length) return null
+  // if (!servers.length) return null
 
   return (
     <div className="flex h-full w-full flex-col items-center space-y-4 bg-neutral-100 py-4 dark:bg-black">
@@ -50,14 +47,14 @@ function NavSidebar() {
             />
           </div>
         ))}
-        {/* // Server with no data in db */}
-        <div key={'kkk'} className="mb-4">
-          <NavItem
-            serverId={'mmm'}
-            imageUrl={servers[0].imageUrl}
-            name={'jjjj'}
-          />
-        </div>
+        {/* Mock for Server with no data found in db */}
+        {/* <div key={'aaa'} className="mb-4">
+            <NavItem
+              serverId={'aaa'}
+              imageUrl={servers[0].imageUrl}
+              name={'aaa'}
+            />
+          </div> */}
       </ScrollArea>
       <NavAction label="Log Out" action="logout" onClick={signOut} />
     </div>

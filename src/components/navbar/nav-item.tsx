@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { useParams, useRouter } from 'next/navigation'
-import { ActionTooltip } from '@/components/navbar/action-tooltip'
+import { ActionTooltip } from '@/components/action-tooltip'
 
 interface NavItemProps {
   serverId: string

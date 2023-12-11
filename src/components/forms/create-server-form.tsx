@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, UseFormReturn } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { serverSchema, ServerSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FileUpload } from '@/components/file-upload'
@@ -17,52 +16,57 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
+import { useServerStore } from '@/hooks/use-server-store'
 
-function InitialForm() {
-  const router = useRouter()
-  const { update } = useSession()
-  const [isLoading, setIsLoading] = useState(false)
-  const form = useForm({
-    resolver: zodResolver(serverSchema),
-    defaultValues: {
-      name: '',
-      imageUrl: ''
-    }
-  })
+interface CreateServerFormProps {
+  form: UseFormReturn<ServerSchema>
+  onSubmit: (values: ServerSchema) => void
+}
 
-  async function updateSession(serverId: string) {
-    update({ server: serverId })
-  }
+function CreateServerForm({ form, onSubmit }: CreateServerFormProps) {
+  // const router = useRouter()
+  // const { update } = useServerStore()
+  // const [isLoading, setIsLoading] = useState(false)
 
-  async function onSubmit(values: ServerSchema) {
-    setIsLoading(true)
-    try {
-      const { data } = await axios.post('/api/server', values)
-      await updateSession(data.serverId)
-      router.replace(`/servers/${data.serverId}`)
-    } catch (err: any) {
-      if (err.response) {
-        console.log(err.response)
-      } else if (err.request) {
-        console.log(err.request)
-      } else {
-        console.log(err.message)
-      }
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  // const form = useForm({
+  //   resolver: zodResolver(serverSchema),
+  //   defaultValues: {
+  //     name: '',
+  //     imageUrl: ''
+  //   }
+  // })
+
+  // async function onSubmit(values: ServerSchema) {
+  //   setIsLoading(true)
+  //   try {
+  //     const { data } = await axios.post('/api/server', values)
+  //     await update()
+  //     router.replace(`/servers/${data.serverId}`)
+  //     form.reset()
+  //     closeModal()
+  //   } catch (err: any) {
+  //     if (err.response) {
+  //       console.log(err.response)
+  //     } else if (err.request) {
+  //       console.log(err.request)
+  //     } else {
+  //       console.log(err.message)
+  //     }
+  //   } finally {
+  //     setIsLoading(false)
+  //   }
+  // }
 
   return (
     <Form {...form}>
-      <LoadingOverlay loading={isLoading} />
+      {/* <LoadingOverlay loading={isLoading} /> */}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Enter your server name</FormLabel>
+              <FormLabel>Create your server</FormLabel>
               <FormControl>
                 <Input placeholder="Example: Cool Server" {...field} />
               </FormControl>
@@ -92,4 +96,4 @@ function InitialForm() {
   )
 }
 
-export { InitialForm }
+export { CreateServerForm }

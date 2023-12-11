@@ -1,5 +1,5 @@
 import { verifyPassword } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db, getFirstServer } from '@/lib/db'
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
@@ -30,17 +30,7 @@ export const authOptions: NextAuthOptions = {
           )
           if (!isPasswordValid) return null
 
-          const server = await db.server.findFirst({
-            where: {
-              members: {
-                some: {
-                  userId: user.id
-                }
-              }
-            }
-          })
-
-          console.log('k', server)
+          const server = await getFirstServer(user.id)
 
           // For user navigation: if server exists show server page otherwise setup page
           if (server)

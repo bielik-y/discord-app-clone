@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from 'next'
 import { getServerSessionUser } from '@/lib/auth'
 import { InitialModal } from '@/components/modals/initial-modal'
+import { getFirstServer } from '@/lib/db'
 
 export default function Home() {
   return (
@@ -14,7 +15,6 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res } = context
   const user = await getServerSessionUser(req, res)
-
   if (!user)
     return {
       redirect: {
@@ -23,11 +23,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
     }
   else {
-    const server = user.server
+    const server = await getFirstServer(user.id)
     if (server)
       return {
         redirect: {
-          destination: `/servers/${server}`,
+          destination: `/servers/${server.id}`,
           permanent: false
         }
       }

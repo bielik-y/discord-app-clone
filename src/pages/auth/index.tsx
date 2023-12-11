@@ -1,6 +1,6 @@
 import { AuthLayout } from '@/components/layout/auth-layout'
-import { LoginForm } from '@/components/login-form'
-import { SignUpForm } from '@/components/signup-form'
+import { LoginForm } from '@/components/forms/login-form'
+import { SignUpForm } from '@/components/forms/signup-form'
 import { useEffect, useState, useCallback } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'

@@ -1,9 +1,11 @@
 import axios from 'axios'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
-import { ServerSchema, serverSchema } from '@/lib/validations'
+import { useRouter } from 'next/navigation'
+import { useModal } from '@/hooks/use-modal-store'
+import { serverSchema, ServerSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useServerStore } from '@/hooks/use-server-store'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import { CreateServerForm } from '@/components/forms/create-server-form'
 import {
@@ -14,10 +16,15 @@ import {
   DialogTitle
 } from '@/components/ui/dialog'
 
-function InitialModal() {
-  const [isMounted, setIsMounted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+function CreateServerModal() {
+  const { isOpen, onClose, type } = useModal()
+
+  const isModalOpen = isOpen && type === 'createServer'
+
   const router = useRouter()
+  const { update } = useServerStore()
+  const [isLoading, setIsLoading] = useState(false)
+  
   const form = useForm({
     resolver: zodResolver(serverSchema),
     defaultValues: {
@@ -26,16 +33,14 @@ function InitialModal() {
     }
   })
 
-  // Prevent hydration error caused by modal
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
   async function handleSubmit(values: ServerSchema) {
     setIsLoading(true)
     try {
       const { data } = await axios.post('/api/server', values)
+      await update()
       router.replace(`/servers/${data.serverId}`)
+      form.reset()
+      onClose()
     } catch (err: any) {
       if (err.response) {
         console.log(err.response)
@@ -50,8 +55,8 @@ function InitialModal() {
   }
 
   return (
-    <Dialog open={isMounted}>
-      <DialogContent hasCloseButton={false}>
+    <Dialog open={isModalOpen} onOpenChange={onClose}>
+      <DialogContent>
         <DialogHeader className="px-8 pt-8">
           <DialogTitle className="text-center text-2xl">
             Customize your server
@@ -62,13 +67,10 @@ function InitialModal() {
           </DialogDescription>
         </DialogHeader>
         <LoadingOverlay loading={isLoading} />
-        <CreateServerForm
-          onSubmit={(values) => handleSubmit(values)}
-          form={form}
-        />
+        <CreateServerForm onSubmit={(values)=>handleSubmit(values)} form={form} />
       </DialogContent>
     </Dialog>
   )
 }
 
-export { InitialModal }
+export { CreateServerModal }
