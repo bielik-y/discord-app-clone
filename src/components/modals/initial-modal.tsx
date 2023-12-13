@@ -34,7 +34,7 @@ function InitialModal() {
   async function handleSubmit(values: ServerSchema) {
     setIsLoading(true)
     try {
-      const { data } = await axios.post('/api/server', values)
+      const { data } = await axios.post('/api/user/servers', values)
       router.replace(`/servers/${data.serverId}`)
     } catch (err: any) {
       if (err.response) {
