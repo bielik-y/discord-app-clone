@@ -1,13 +1,8 @@
-import axios from 'axios'
-import { useState } from 'react'
-import { useForm, UseFormReturn } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-import { serverSchema, ServerSchema } from '@/lib/validations'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { UseFormReturn } from 'react-hook-form'
+import { ServerSchema } from '@/lib/validations'
 import { FileUpload } from '@/components/file-upload'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { LoadingOverlay } from '@/components/loading-overlay'
 import {
   Form,
   FormControl,
@@ -16,7 +11,6 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { useServerStore } from '@/hooks/use-server-store'
 
 interface CreateServerFormProps {
   form: UseFormReturn<ServerSchema>
@@ -24,42 +18,8 @@ interface CreateServerFormProps {
 }
 
 function CreateServerForm({ form, onSubmit }: CreateServerFormProps) {
-  // const router = useRouter()
-  // const { update } = useServerStore()
-  // const [isLoading, setIsLoading] = useState(false)
-
-  // const form = useForm({
-  //   resolver: zodResolver(serverSchema),
-  //   defaultValues: {
-  //     name: '',
-  //     imageUrl: ''
-  //   }
-  // })
-
-  // async function onSubmit(values: ServerSchema) {
-  //   setIsLoading(true)
-  //   try {
-  //     const { data } = await axios.post('/api/server', values)
-  //     await update()
-  //     router.replace(`/servers/${data.serverId}`)
-  //     form.reset()
-  //     closeModal()
-  //   } catch (err: any) {
-  //     if (err.response) {
-  //       console.log(err.response)
-  //     } else if (err.request) {
-  //       console.log(err.request)
-  //     } else {
-  //       console.log(err.message)
-  //     }
-  //   } finally {
-  //     setIsLoading(false)
-  //   }
-  // }
-
   return (
     <Form {...form}>
-      {/* <LoadingOverlay loading={isLoading} /> */}
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}

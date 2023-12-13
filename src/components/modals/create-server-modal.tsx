@@ -36,7 +36,7 @@ function CreateServerModal() {
   async function handleSubmit(values: ServerSchema) {
     setIsLoading(true)
     try {
-      const { data } = await axios.post('/api/server', values)
+      const { data } = await axios.post('/api/user/servers', values)
       await update()
       router.replace(`/servers/${data.serverId}`)
       form.reset()

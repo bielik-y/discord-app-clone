@@ -1,5 +1,4 @@
 import React from 'react'
-import { ModeToggle } from '@/components/mode-toggle'
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (

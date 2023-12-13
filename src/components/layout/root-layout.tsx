@@ -3,7 +3,7 @@ const font = Figtree({ subsets: ['latin'] })
 
 // Root layout for all pages
 function RootLayout({ children }: { children: React.ReactNode }) {
-  return <main className={font.className}>{children}</main>
+  return <div className={font.className}>{children}</div>
 }
 
 export { RootLayout }
