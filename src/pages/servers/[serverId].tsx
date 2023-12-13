@@ -5,19 +5,19 @@ import { Server } from '@/types/models'
 import { Spinner } from '@/components/ui/spinner'
 import { MainLayout } from '@/components/layout/main-layout'
 import { ServerSidebar } from '@/components/navbar/server-sidebar'
+import { useServerStore } from '@/hooks/use-server-store'
 
 export default function Server() {
   const params = useParams()
   const [isLoading, setIsLoading] = useState(false)
-  const [server, setServer] = useState<Server>()
+  const { current, updateCurrent } = useServerStore()
 
   const getServer = useCallback(async () => {
     try {
       setIsLoading(true)
       if (params) {
         if (typeof params.serverId === 'string') {
-          const { data } = await axios.get(`/api/server/${params.serverId}`)
-          setServer(data.server)
+          updateCurrent(params.serverId)
         }
       }
     } catch (err) {
@@ -25,7 +25,7 @@ export default function Server() {
     } finally {
       setIsLoading(false)
     }
-  }, [params])
+  }, [params, updateCurrent])
 
   useEffect(() => {
     getServer()
@@ -37,13 +37,13 @@ export default function Server() {
         <Spinner loading={isLoading} />
       </div>
     )
-  if (!server) return <p>Data is not found</p>
+  if (!current) return <p>Data is not found</p>
   return (
     <div className="h-full">
       <div className="fixed inset-y-0 z-20 hidden h-full w-60 flex-col md:flex">
-        <ServerSidebar server={server} />
+        <ServerSidebar server={current} />
       </div>
-      <main className="h-full md:pl-60">{server.name}</main>
+      <main className="h-full md:pl-60">{current.name}</main>
     </div>
   )
 }

@@ -32,7 +32,7 @@ function ServerHeader({ server, role }: ServerHeaderProps) {
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none" asChild>
         <button className="text-md flex h-12 w-full items-center border-b-2 border-neutral-200 px-3 font-semibold transition hover:bg-zinc-700/10 dark:border-neutral-800 dark:hover:bg-zinc-700/50">
-          <h1 className='truncate'>{server.name}</h1>
+          <h1 className="truncate">{server.name}</h1>
           <ChevronDown className="ml-auto h-5 w-5" />
         </button>
       </DropdownMenuTrigger>
@@ -47,7 +47,10 @@ function ServerHeader({ server, role }: ServerHeaderProps) {
           </DropdownMenuItem>
         )}
         {isAdmin && (
-          <DropdownMenuItem className=" cursor-pointer px-3 py-2 text-sm">
+          <DropdownMenuItem
+            onClick={() => onOpen('editServer', { server })}
+            className="cursor-pointer px-3 py-2 text-sm"
+          >
             Server settings
             <Settings className="ml-auto h-4 w-4" />
           </DropdownMenuItem>

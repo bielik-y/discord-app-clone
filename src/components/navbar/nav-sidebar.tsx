@@ -8,16 +8,16 @@ import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
 
 function NavSidebar() {
-  const { servers, update } = useServerStore()
+  const { servers, updateServers } = useServerStore()
   const { onOpen } = useModal()
 
   const getServers = useCallback(async () => {
     try {
-      update()
+      updateServers()
     } catch (err) {
       console.log(err)
     }
-  }, [update])
+  }, [updateServers])
 
   useEffect(() => {
     getServers()

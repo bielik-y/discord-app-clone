@@ -63,6 +63,7 @@ function InitialModal() {
         </DialogHeader>
         <LoadingOverlay loading={isLoading} />
         <CreateServerForm
+          buttonText='Create'
           onSubmit={(values) => handleSubmit(values)}
           form={form}
         />

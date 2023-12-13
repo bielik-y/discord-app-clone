@@ -14,10 +14,11 @@ import {
 
 interface CreateServerFormProps {
   form: UseFormReturn<ServerSchema>
+  buttonText: string
   onSubmit: (values: ServerSchema) => void
 }
 
-function CreateServerForm({ form, onSubmit }: CreateServerFormProps) {
+function CreateServerForm({ form, onSubmit, buttonText }: CreateServerFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -49,7 +50,7 @@ function CreateServerForm({ form, onSubmit }: CreateServerFormProps) {
           />
         </div>
         <Button type="submit" size="lg" className="w-full">
-          Create
+          {buttonText}
         </Button>
       </form>
     </Form>

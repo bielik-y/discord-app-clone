@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
 import { serverSchema, ServerSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,15 +15,19 @@ import {
   DialogTitle
 } from '@/components/ui/dialog'
 
-function CreateServerModal() {
-  const { isOpen, onClose, type } = useModal()
+function EditServerModal() {
+  const {
+    isOpen,
+    onClose,
+    type,
+    data: { server }
+  } = useModal()
 
-  const isModalOpen = isOpen && type === 'createServer'
-
-  const router = useRouter()
-  const { updateServers } = useServerStore()
+  const { updateServers, updateCurrent } = useServerStore()
   const [isLoading, setIsLoading] = useState(false)
-  
+
+  const isModalOpen = isOpen && type === 'editServer'
+
   const form = useForm({
     resolver: zodResolver(serverSchema),
     defaultValues: {
@@ -33,14 +36,22 @@ function CreateServerModal() {
     }
   })
 
+  useEffect(() => {
+    if (server) {
+      form.setValue('name', server.name)
+      form.setValue('imageUrl', server.imageUrl)
+    }
+  }, [server, form])
+
   async function handleSubmit(values: ServerSchema) {
     setIsLoading(true)
     try {
-      const { data } = await axios.post('/api/user/servers', values)
-      await updateServers()
-      router.replace(`/servers/${data.serverId}`)
-      form.reset()
-      onClose()
+      if (server) {
+        await axios.patch(`/api/server/${server.id}`, values)
+        updateServers()
+        updateCurrent(server.id)
+        onClose()
+      }
     } catch (err: any) {
       if (err.response) {
         console.log(err.response)
@@ -67,10 +78,14 @@ function CreateServerModal() {
           </DialogDescription>
         </DialogHeader>
         <LoadingOverlay loading={isLoading} />
-        <CreateServerForm buttonText='Create' onSubmit={(values)=>handleSubmit(values)} form={form} />
+        <CreateServerForm
+          buttonText="Save"
+          onSubmit={(values) => handleSubmit(values)}
+          form={form}
+        />
       </DialogContent>
     </Dialog>
   )
 }
 
-export { CreateServerModal }
+export { EditServerModal }
