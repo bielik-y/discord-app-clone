@@ -14,9 +14,11 @@ export default function Server() {
   const getServer = useCallback(async () => {
     try {
       setIsLoading(true)
-      if (typeof params.serverId === 'string') {
-        const { data } = await axios.get(`/api/server/${params.serverId}`)
-        setServer(data.server)
+      if (params) {
+        if (typeof params.serverId === 'string') {
+          const { data } = await axios.get(`/api/server/${params.serverId}`)
+          setServer(data.server)
+        }
       }
     } catch (err) {
       console.log(err)

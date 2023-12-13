@@ -14,8 +14,10 @@ export const useServerStore = create<ServerStore>((set) => ({
   activeServerId: null,
   update: async (activeId) => {
     const { data } = await axios.get('/api/user/servers')
-    if (activeId) set({ servers: data.servers, activeServerId: activeId })
-    else set({ servers: data.servers, activeServerId: data.servers[0].id })
+    if (data.servers.length) {
+      if (activeId) set({ servers: data.servers, activeServerId: activeId })
+      else set({ servers: data.servers, activeServerId: data.servers[0].id })
+    }
   },
   changeActive: (id) => set({ activeServerId: id })
 }))
