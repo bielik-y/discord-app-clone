@@ -1,5 +1,5 @@
 import { signOut } from 'next-auth/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { NavAction } from '@/components/navbar/nav-action'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -27,10 +27,8 @@ function NavSidebar() {
     onOpen('createServer')
   }
 
-  // if (!servers.length) return null
-
   return (
-    <div className="flex h-full w-full flex-col items-center space-y-4 bg-neutral-100 py-4 dark:bg-black">
+    <div className="flex h-full w-full flex-col items-center space-y-4 bg-white  py-4 dark:bg-black">
       <NavAction
         label="Add a server"
         action="add"

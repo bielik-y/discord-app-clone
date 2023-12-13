@@ -7,4 +7,7 @@ declare module 'next-auth' {
     imageUrl: string
     server?: string
   }
+  interface Session {
+    user: User
+  }
 }

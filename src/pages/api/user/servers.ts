@@ -59,7 +59,7 @@ export default async function handler(
         }
       })
 
-      res.status(201).json({
+      res.status(200).json({
         servers: servers.map((data) => ({
           id: data.id,
           name: data.name,
