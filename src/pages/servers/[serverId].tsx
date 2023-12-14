@@ -17,7 +17,7 @@ export default function Server() {
       setIsLoading(true)
       if (params) {
         if (typeof params.serverId === 'string') {
-          updateCurrent(params.serverId)
+          await updateCurrent(params.serverId)
         }
       }
     } catch (err) {
