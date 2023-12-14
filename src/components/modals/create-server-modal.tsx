@@ -22,7 +22,7 @@ function CreateServerModal() {
   const isModalOpen = isOpen && type === 'createServer'
 
   const router = useRouter()
-  const { updateServers } = useServerStore()
+  const { updateUserServers } = useServerStore()
   const [isLoading, setIsLoading] = useState(false)
   
   const form = useForm({
@@ -37,7 +37,7 @@ function CreateServerModal() {
     setIsLoading(true)
     try {
       const { data } = await axios.post('/api/user/servers', values)
-      await updateServers()
+      await updateUserServers()
       router.replace(`/servers/${data.serverId}`)
       form.reset()
       onClose()

@@ -20,10 +20,9 @@ function EditServerModal() {
     isOpen,
     onClose,
     type,
-    data: { server }
   } = useModal()
-
-  const { updateServers, updateCurrent } = useServerStore()
+  
+  const { server, updateUserServers, updateServer } = useServerStore()
   const [isLoading, setIsLoading] = useState(false)
 
   const isModalOpen = isOpen && type === 'editServer'
@@ -47,9 +46,9 @@ function EditServerModal() {
     setIsLoading(true)
     try {
       if (server) {
-        await axios.patch(`/api/server/${server.id}`, values)
-        updateServers()
-        updateCurrent(server.id)
+        const { data } = await axios.patch(`/api/server/${server.id}`, values)
+        updateUserServers()
+        updateServer(data.server)
         onClose()
       }
     } catch (err: any) {

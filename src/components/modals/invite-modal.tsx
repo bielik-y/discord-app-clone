@@ -1,27 +1,23 @@
+import axios from 'axios'
+import { useState } from 'react'
+import { useOrigin } from '@/hooks/use-origin'
 import { useModal } from '@/hooks/use-modal-store'
+import { useServerStore } from '@/hooks/use-server-store'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Check, Copy, RefreshCw } from 'lucide-react'
+import { LoadingOverlay } from '@/components/loading-overlay'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { Check, Copy, RefreshCw } from 'lucide-react'
-import { useOrigin } from '@/hooks/use-origin'
-import { useState } from 'react'
-import axios from 'axios'
-import { LoadingOverlay } from '../loading-overlay'
 
 function InviteModal() {
-  const {
-    isOpen,
-    onOpen,
-    onClose,
-    type,
-    data: { server }
-  } = useModal()
+  const { isOpen, onClose, type } = useModal()
+  const { server, updateServer } = useServerStore()
   const [isCopied, setIsCopied] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const origin = useOrigin()
@@ -45,7 +41,7 @@ function InviteModal() {
       const { data } = await axios.patch(
         `/api/server/${server?.id}/invite-code`
       )
-      onOpen('invite', { server: data.server })
+      updateServer(data.server)
     } catch (err) {
       console.log(err)
     } finally {

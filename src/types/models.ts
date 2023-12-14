@@ -1,3 +1,15 @@
+import {
+  Server as ServerDB,
+  Member as MemberDB,
+  User as UserDB,
+  Channel as ChannelDB
+} from '@prisma/client'
+
+export type ServerWithMembersWithUsersWithChannels = ServerDB & {
+  members: (MemberDB & { user: UserDB })[]
+  channels: ChannelDB[]
+}
+
 export interface ServerShort {
   id: string
   name: string
@@ -8,6 +20,7 @@ export interface Server extends ServerShort {
   inviteCode: string
   channels: Channel[]
   members: Member[]
+  userId: string
 }
 
 export interface Channel {
@@ -26,4 +39,5 @@ export interface Member {
 export interface UserShort {
   id: string
   username: string
+  email: string
 }

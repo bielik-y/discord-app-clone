@@ -39,7 +39,7 @@ function ServerHeader({ server, role }: ServerHeaderProps) {
       <DropdownMenuContent className="w-56 space-y-[2px] text-xs font-medium text-black dark:text-neutral-400">
         {isModerator && (
           <DropdownMenuItem
-            onClick={() => onOpen('invite', { server })}
+            onClick={() => onOpen('invite')}
             className="cursor-pointer px-3 py-2 text-sm text-indigo-dark dark:text-indigo-light"
           >
             Invite friends
@@ -48,7 +48,7 @@ function ServerHeader({ server, role }: ServerHeaderProps) {
         )}
         {isAdmin && (
           <DropdownMenuItem
-            onClick={() => onOpen('editServer', { server })}
+            onClick={() => onOpen('editServer')}
             className="cursor-pointer px-3 py-2 text-sm"
           >
             Server settings
@@ -56,7 +56,10 @@ function ServerHeader({ server, role }: ServerHeaderProps) {
           </DropdownMenuItem>
         )}
         {isAdmin && (
-          <DropdownMenuItem className=" cursor-pointer px-3 py-2 text-sm">
+          <DropdownMenuItem
+            onClick={() => onOpen('members')}
+            className=" cursor-pointer px-3 py-2 text-sm"
+          >
             Manage members
             <Users className="ml-auto h-4 w-4" />
           </DropdownMenuItem>

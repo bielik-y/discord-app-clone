@@ -8,16 +8,16 @@ import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
 
 function NavSidebar() {
-  const { servers, updateServers } = useServerStore()
+  const { userServers, updateUserServers } = useServerStore()
   const { onOpen } = useModal()
 
   const getServers = useCallback(async () => {
     try {
-      updateServers()
+      await updateUserServers()
     } catch (err) {
       console.log(err)
     }
-  }, [updateServers])
+  }, [updateUserServers])
 
   useEffect(() => {
     getServers()
@@ -36,7 +36,7 @@ function NavSidebar() {
       />
       <Separator className="h-0.5 w-12 rounded-full bg-neutral-200 dark:bg-neutral-600" />
       <ScrollArea className="w-full flex-1">
-        {servers.map((server) => (
+        {userServers.map((server) => (
           <div key={server.id} className="mb-4">
             <NavItem
               serverId={server.id}

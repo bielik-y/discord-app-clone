@@ -1,4 +1,4 @@
-import { db, getServerDataById } from '@/lib/db'
+import { db, excludeNonClientData, getServerDataById } from '@/lib/db'
 import { getServerSessionUser } from '@/lib/auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -54,6 +54,21 @@ export default async function handler(
         data: {
           name: name,
           imageUrl: imageUrl
+        },
+        include: {
+          channels: {
+            orderBy: {
+              createdAt: 'asc'
+            }
+          },
+          members: {
+            include: {
+              user: true
+            },
+            orderBy: {
+              role: 'asc'
+            }
+          }
         }
       })
       if (!server) {
@@ -61,7 +76,7 @@ export default async function handler(
         return
       } else
         res.status(200).json({
-          server: server
+          server: excludeNonClientData(server)
         })
     } catch (err) {
       res.status(500).json({ message: 'Server error' })

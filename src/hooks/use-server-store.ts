@@ -1,25 +1,29 @@
 import axios from 'axios'
-import { Server, ServerShort } from '@/types/models'
 import { create } from 'zustand'
+import { Server, ServerShort } from '@/types/models'
 
 interface ServerStore {
-  servers: ServerShort[]
-  current: Server | null
-  updateServers: () => void
-  updateCurrent: (serverId: string) => void
+  userServers: ServerShort[]
+  server: Server | null
+  updateUserServers: () => void
+  updateServer: (server: Server) => void
+  setServer: (serverId: string) => void
 }
 
 export const useServerStore = create<ServerStore>((set) => ({
-  servers: [],
-  current: null,
-  updateServers: async () => {
+  userServers: [],
+  server: null,
+  updateUserServers: async () => {
     const { data } = await axios.get('/api/user/servers')
     if (data.servers.length) {
-      set({ servers: data.servers })
+      set({ userServers: data.servers })
     }
   },
-  updateCurrent: async (serverId) => {
+  updateServer: async (server) => {
+    set({ server: server })
+  },
+  setServer: async (serverId) => {
     const { data } = await axios.get(`/api/server/${serverId}`)
-    if (data.server) set({ current: data.server })
+    if (data.server) set({ server: data.server })
   }
 }))

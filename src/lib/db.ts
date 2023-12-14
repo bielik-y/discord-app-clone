@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import { ServerWithMembersWithUsersWithChannels } from '@/types/models'
+import { PrismaClient, Server } from '@prisma/client'
 
 declare global {
   var prisma: PrismaClient | undefined
@@ -49,27 +50,34 @@ export async function getServerDataById(serverId: string, userId: string) {
       }
     }
   })
-  if (server)
-    return {
-      id: server.id,
-      name: server.name,
-      imageUrl: server.imageUrl,
-      inviteCode: server.inviteCode,
-      channels: server.channels.map((channel) => ({
-        id: channel.id,
-        name: channel.name,
-        type: channel.type,
-        userId: channel.userId
-      })),
-      members: server.members.map((member) => ({
-        id: member.id,
-        role: member.role,
-        user: {
-          id: member.user.id,
-          username: member.user.username
-        }
-      }))
-    }
+  if (server) return excludeNonClientData(server)
+}
+
+export function excludeNonClientData(
+  server: ServerWithMembersWithUsersWithChannels
+) {
+  return {
+    id: server.id,
+    name: server.name,
+    imageUrl: server.imageUrl,
+    inviteCode: server.inviteCode,
+    userId: server.userId,
+    channels: server.channels.map((channel) => ({
+      id: channel.id,
+      name: channel.name,
+      type: channel.type,
+      userId: channel.userId
+    })),
+    members: server.members.map((member) => ({
+      id: member.id,
+      role: member.role,
+      user: {
+        id: member.user.id,
+        username: member.user.username,
+        email: member.user.email
+      }
+    }))
+  }
 }
 
 export async function getFirstServer(userId: string) {

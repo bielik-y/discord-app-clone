@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { db, excludeNonClientData } from '@/lib/db'
 import { v4 as uuid } from 'uuid'
 import { getServerSessionUser } from '@/lib/auth'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -24,6 +24,21 @@ export default async function handler(
         },
         data: {
           inviteCode: uuid()
+        },
+        include: {
+          channels: {
+            orderBy: {
+              createdAt: 'asc'
+            }
+          },
+          members: {
+            include: {
+              user: true
+            },
+            orderBy: {
+              role: 'asc'
+            }
+          }
         }
       })
       
@@ -32,7 +47,7 @@ export default async function handler(
         return
       } else
         res.status(200).json({
-          server: server
+          server: excludeNonClientData(server)
         })
     } catch (err) {
       res.status(500).json({ message: 'Server error' })
