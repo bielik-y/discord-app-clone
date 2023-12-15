@@ -27,7 +27,7 @@ function CreateServerForm({ form, onSubmit, buttonText }: CreateServerFormProps)
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Create your server</FormLabel>
+              <FormLabel className='uppercase text-xs text-neutral-500'>Server name</FormLabel>
               <FormControl>
                 <Input placeholder="Example: Cool Server" {...field} />
               </FormControl>
