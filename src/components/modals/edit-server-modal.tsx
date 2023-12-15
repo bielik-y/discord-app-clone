@@ -42,6 +42,14 @@ function EditServerModal() {
     }
   }, [server, form])
 
+  function handleClose() {
+    if (server) {
+      form.setValue('name', server.name)
+      form.setValue('imageUrl', server.imageUrl)
+    }
+    onClose()
+  }
+
   async function handleSubmit(values: ServerSchema) {
     setIsLoading(true)
     try {
@@ -65,7 +73,7 @@ function EditServerModal() {
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={onClose}>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent>
         <DialogHeader className="px-8 pt-8">
           <DialogTitle className="text-center text-2xl">
