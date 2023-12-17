@@ -7,6 +7,8 @@ export type ModalType =
   | 'members'
   | 'createChannel'
   | 'leaveServer'
+  | 'deleteServer'
+  | 'logout'
 
 interface ModalStore {
   type: ModalType | null

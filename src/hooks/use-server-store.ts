@@ -8,6 +8,7 @@ interface ServerStore {
   updateUserServers: () => void
   updateServer: (server: Server) => void
   setServer: (serverId: string) => void
+  resetServers: () => void
 }
 
 export const useServerStore = create<ServerStore>((set) => ({
@@ -25,5 +26,8 @@ export const useServerStore = create<ServerStore>((set) => ({
   setServer: async (serverId) => {
     const { data } = await axios.get(`/api/server/${serverId}`)
     if (data.server) set({ server: data.server })
+  },
+  resetServers: () => {
+    set({ server: null, userServers: [] })
   }
 }))

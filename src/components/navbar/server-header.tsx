@@ -75,15 +75,19 @@ function ServerHeader({ server, role }: ServerHeaderProps) {
         )}
         {isModerator && <DropdownMenuSeparator />}
         {isAdmin && (
-          <DropdownMenuItem className=" cursor-pointer px-3 py-2 text-sm text-rose-700">
+          <DropdownMenuItem
+            onClick={() => onOpen('deleteServer')}
+            className="cursor-pointer px-3 py-2 text-sm text-rose-700"
+          >
             Delete server
             <Trash className="ml-auto h-4 w-4" />
           </DropdownMenuItem>
         )}
         {!isAdmin && (
-          <DropdownMenuItem 
-          onClick={() => onOpen('leaveServer')}
-          className=" cursor-pointer px-3 py-2 text-sm text-rose-700">
+          <DropdownMenuItem
+            onClick={() => onOpen('leaveServer')}
+            className=" cursor-pointer px-3 py-2 text-sm text-rose-700"
+          >
             Leave server
             <LogOut className="ml-auto h-4 w-4" />
           </DropdownMenuItem>

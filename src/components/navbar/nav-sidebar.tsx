@@ -1,4 +1,3 @@
-import { signOut } from 'next-auth/react'
 import { useCallback, useEffect } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { NavAction } from '@/components/navbar/nav-action'
@@ -54,7 +53,7 @@ function NavSidebar() {
             />
           </div> */}
       </ScrollArea>
-      <NavAction label="Log Out" action="logout" onClick={signOut} />
+      <NavAction label="Log Out" action="logout" onClick={() => onOpen('logout')} />
     </div>
   )
 }
