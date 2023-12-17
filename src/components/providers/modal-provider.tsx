@@ -4,6 +4,7 @@ import { EditServerModal } from '@/components/modals/edit-server-modal'
 import { MembersModal } from '@/components/modals/members-modal'
 import { InviteModal } from '@/components/modals/invite-modal'
 import { CreateChannelModal } from '@/components/modals/create-channel-modal'
+import { LeaveServerModal } from '@/components/modals/leave-server-modal'
 
 function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false)
@@ -22,6 +23,7 @@ function ModalProvider() {
     <EditServerModal />
     <MembersModal />
     <InviteModal />
+    <LeaveServerModal />
   </>
   )
 }

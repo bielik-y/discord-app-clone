@@ -1,7 +1,12 @@
 import { create } from 'zustand'
 
-export type ModalType = 'createServer' | 'invite' | 'editServer' | 'members' | 'createChannel'
-
+export type ModalType =
+  | 'createServer'
+  | 'invite'
+  | 'editServer'
+  | 'members'
+  | 'createChannel'
+  | 'leaveServer'
 
 interface ModalStore {
   type: ModalType | null
@@ -14,6 +19,6 @@ export const useModal = create<ModalStore>((set) => ({
   type: null,
   data: {},
   isOpen: false,
-  onOpen: (type) => set({ isOpen: true, type}),
-  onClose: () => set({type: null, isOpen: false})
+  onOpen: (type) => set({ isOpen: true, type }),
+  onClose: () => set({ type: null, isOpen: false })
 }))
