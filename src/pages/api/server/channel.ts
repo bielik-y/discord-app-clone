@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { channelSchema } from '@/lib/validations'
 import { z } from 'zod'
 import { Role } from '@prisma/client'
+import { channel } from 'diagnostics_channel'
 
 export default async function handler(
   req: NextApiRequest,
@@ -136,6 +137,45 @@ export default async function handler(
         }
       })
       res.status(200).json({ server: excludeNonClientData(server) })
+      return
+    } catch (err) {
+      res.status(500).json({ message: 'Server error' })
+      return
+    }
+  } else if (req.method === 'GET') {
+    const user = await getServerSessionUser(req, res)
+    if (!user) {
+      res.status(401).json({ message: 'Unauthorized' })
+      return
+    }
+
+    const { serverId, channelId } = req.query
+
+    if (typeof serverId !== 'string' || typeof channelId !== 'string') {
+      res.status(400).json({ message: 'Invalid or missing request params' })
+      return
+    }
+
+    try {
+      const channel = await db.channel.findUnique({
+        where: {
+          id: channelId
+        }
+      })
+
+      const member = await db.member.findFirst({
+        where: {
+          serverId: serverId,
+          userId: user.id
+        }
+      })
+
+      if (!channel || !member) {
+        res.status(400).redirect('/')
+        return
+      }
+
+      res.status(200).json({ channel: channel })
       return
     } catch (err) {
       res.status(500).json({ message: 'Server error' })

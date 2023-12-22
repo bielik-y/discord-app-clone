@@ -9,6 +9,7 @@ import {
   CommandItem,
   CommandList
 } from '@/components//ui/command'
+import { useServerStore } from '@/hooks/use-server-store'
 
 interface ServerSearchProps {
   data: {
@@ -26,6 +27,7 @@ interface ServerSearchProps {
 
 function ServerSearch({ data }: ServerSearchProps) {
   const [open, setOpen] = useState(false)
+  const { setChannel, setMember } = useServerStore()
   const router = useRouter()
   const params = useParams()
 
@@ -40,14 +42,16 @@ function ServerSearch({ data }: ServerSearchProps) {
     return () => document.removeEventListener('keydown', down)
   }, [])
 
-  function handleClick({id, type}: {id: string, type: 'channel' | 'member'}) {
+  function handleClick({
+    id,
+    type
+  }: {
+    id: string
+    type: 'channel' | 'member'
+  }) {
     setOpen(false)
-    if (type === 'member') {
-      return router.push(`/servers/${params?.serverId}/conversations/${id}`)
-    }
-    if (type === 'channel') {
-      return router.push(`/servers/${params?.serverId}/channels/${id}`)
-    }
+    if (type === 'member') setMember(id)
+    if (type === 'channel') setChannel(id)
   }
 
   return (
@@ -75,7 +79,10 @@ function ServerSearch({ data }: ServerSearchProps) {
                 <CommandGroup key={label} heading={label}>
                   {data?.map(({ id, icon, name }) => {
                     return (
-                      <CommandItem key={id} onSelect={() => handleClick({id, type})}>
+                      <CommandItem
+                        key={id}
+                        onSelect={() => handleClick({ id, type })}
+                      >
                         {icon}
                         <span>{name}</span>
                       </CommandItem>

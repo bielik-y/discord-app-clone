@@ -12,10 +12,10 @@ export function ModeToggle() {
   const { setTheme } = useTheme()
 
   return (
-    <div className="fixed right-2 top-2 z-40">
+    <div className="fixed right-2 top-0 z-40">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" className='rounded-none rounded-b-md'>
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>

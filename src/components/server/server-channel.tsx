@@ -2,9 +2,8 @@ import { cn } from '@/lib/utils'
 import { Channel, Server } from '@/types/models'
 import { ChannelType, Role } from '@prisma/client'
 import { Hash, Mic, Trash, Video, Lock } from 'lucide-react'
-import { useParams } from 'next/navigation'
 import { ActionTooltip } from '../action-tooltip'
-import { ModalType, useModal } from '@/hooks/use-modal-store'
+import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
 import React from 'react'
 
@@ -21,8 +20,6 @@ const channelIconMap = {
 }
 
 function ServerChannel({ channel, server, role }: ServerChannelProps) {
-  const params = useParams()
-
   const { currentChannel, setChannel } = useServerStore()
   const { onOpen } = useModal()
 
@@ -59,9 +56,10 @@ function ServerChannel({ channel, server, role }: ServerChannelProps) {
       {channel.name !== 'general' && role !== Role.GUEST && (
         <div className="ml-auto flex items-center gap-x-2">
           <ActionTooltip label="delete" align="center" side="right">
-            <Trash 
-            onClick={e => handleAction(e)}
-            className="hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300" />
+            <Trash
+              onClick={(e) => handleAction(e)}
+              className="hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300"
+            />
           </ActionTooltip>
         </div>
       )}
