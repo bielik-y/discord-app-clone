@@ -82,5 +82,64 @@ export default async function handler(
       res.status(500).json({ message: 'Server error' })
       return
     }
+  } else if (req.method === 'DELETE') {
+    const user = await getServerSessionUser(req, res)
+    if (!user) {
+      res.status(401).json({ message: 'Unauthorized' })
+      return
+    }
+
+    const { serverId, channelId } = req.query
+
+    if (typeof serverId !== 'string' || typeof channelId !== 'string') {
+      res.status(400).json({ message: 'Invalid or missing request params' })
+      return
+    }
+
+    try {
+      const server = await db.server.update({
+        where: {
+          id: serverId,
+          members: {
+            some: {
+              userId: user.id,
+              role: {
+                in: [Role.ADMIN, Role.MODERATOR]
+              }
+            }
+          }
+        },
+        data: {
+          channels: {
+            delete: {
+              id: channelId,
+              name: {
+                not: 'general'
+              }
+            }
+          }
+        },
+        include: {
+          channels: {
+            orderBy: {
+              createdAt: 'asc'
+            }
+          },
+          members: {
+            include: {
+              user: true
+            },
+            orderBy: {
+              role: 'asc'
+            }
+          }
+        }
+      })
+      res.status(200).json({ server: excludeNonClientData(server) })
+      return
+    } catch (err) {
+      res.status(500).json({ message: 'Server error' })
+      return
+    }
   }
 }

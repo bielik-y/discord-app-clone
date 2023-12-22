@@ -7,6 +7,7 @@ import { CreateChannelModal } from '@/components/modals/create-channel-modal'
 import { LeaveServerModal } from '@/components/modals/leave-server-modal'
 import { DeleteServerModal } from '@/components/modals/delete-server-modal'
 import { LogoutModal } from '@/components/modals/logout-modal'
+import { DeleteChannelModal } from '@/components/modals/delete-channel-modal'
 
 function ModalProvider() {
   const [isMounted, setIsMounted] = useState(false)
@@ -28,6 +29,7 @@ function ModalProvider() {
     <LeaveServerModal />
     <DeleteServerModal />
     <LogoutModal />
+    <DeleteChannelModal />
   </>
   )
 }

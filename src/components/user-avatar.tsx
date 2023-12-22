@@ -32,7 +32,7 @@ function UserAvatar({
   return (
     <Avatar className={cn('h-7 w-7 md:h-10 md:w-10', className)}>
       <AvatarFallback
-        className={`bg-gradient-to-r text-white ${getRandomGradient(
+        className={`bg-gradient-to-r text-white text-sm ${getRandomGradient(
           positionForAvatar
         )}`}
       >

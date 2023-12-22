@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation'
 import { Server } from '@/types/models'
 import { Spinner } from '@/components/ui/spinner'
 import { MainLayout } from '@/components/layout/main-layout'
-import { ServerSidebar } from '@/components/navbar/server-sidebar'
+import { ServerSidebar } from '@/components/server/server-sidebar'
 import { useServerStore } from '@/hooks/use-server-store'
 
 export default function Server() {

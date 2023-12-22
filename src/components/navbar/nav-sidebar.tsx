@@ -27,13 +27,13 @@ function NavSidebar() {
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center space-y-4 bg-white  py-4 dark:bg-black">
+    <div className="flex h-full w-full flex-col items-center space-y-4 bg-[#E3E5E8] py-4 dark:bg-black">
       <NavAction
         label="Add a server"
         action="add"
         onClick={handleAddServerClick}
       />
-      <Separator className="h-0.5 w-12 rounded-full bg-neutral-200 dark:bg-neutral-600" />
+      <Separator className="h-0.5 w-12 rounded-full bg-neutral-50 dark:bg-neutral-600" />
       <ScrollArea className="w-full flex-1">
         {userServers.map((server) => (
           <div key={server.id} className="mb-4">
@@ -53,7 +53,11 @@ function NavSidebar() {
             />
           </div> */}
       </ScrollArea>
-      <NavAction label="Log Out" action="logout" onClick={() => onOpen('logout')} />
+      <NavAction
+        label="Log Out"
+        action="logout"
+        onClick={() => onOpen('logout')}
+      />
     </div>
   )
 }
