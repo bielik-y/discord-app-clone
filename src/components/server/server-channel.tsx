@@ -4,8 +4,9 @@ import { ChannelType, Role } from '@prisma/client'
 import { Hash, Mic, Trash, Video, Lock } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { ActionTooltip } from '../action-tooltip'
-import { useModal } from '@/hooks/use-modal-store'
+import { ModalType, useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
+import React from 'react'
 
 interface ServerChannelProps {
   channel: Channel
@@ -31,6 +32,12 @@ function ServerChannel({ channel, server, role }: ServerChannelProps) {
     setChannel(channel.id)
   }
 
+  // Resolve onClick conflict between redirect and delete button
+  function handleAction(e: React.MouseEvent) {
+    e.stopPropagation()
+    onOpen('deleteChannel', channel)
+  }
+
   return (
     <button
       onClick={handleClick}
@@ -53,7 +60,7 @@ function ServerChannel({ channel, server, role }: ServerChannelProps) {
         <div className="ml-auto flex items-center gap-x-2">
           <ActionTooltip label="delete" align="center" side="right">
             <Trash 
-            onClick={() => onOpen('deleteChannel', channel)}
+            onClick={e => handleAction(e)}
             className="hidden h-4 w-4 text-zinc-500 transition hover:text-zinc-600 group-hover:block dark:text-zinc-400 dark:hover:text-zinc-300" />
           </ActionTooltip>
         </div>
