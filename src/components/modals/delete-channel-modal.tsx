@@ -1,7 +1,6 @@
 import axios from 'axios'
 import qs from 'query-string'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
 import { Button } from '@/components/ui/button'
@@ -16,9 +15,8 @@ import {
 } from '@/components/ui/dialog'
 
 function DeleteChannelModal() {
-  const router = useRouter()
   const { isOpen, onClose, type, data } = useModal()
-  const { server, updateServer } = useServerStore()
+  const { server, updateServer, setChannel } = useServerStore()
   const [isLoading, setIsLoading] = useState(false)
 
   const isModalOpen = isOpen && type === 'deleteChannel'
@@ -35,6 +33,7 @@ function DeleteChannelModal() {
       })
       const res = await axios.delete(url)
       await updateServer(res.data.server)
+      setChannel(res.data.server.channels[0].id)
       // router.replace('/')
       onClose()
     } catch (err) {

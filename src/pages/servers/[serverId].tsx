@@ -9,12 +9,13 @@ import { useServerStore } from '@/hooks/use-server-store'
 export default function Server() {
   const params = useParams()
   const [isLoading, setIsLoading] = useState(false)
-  const { server, setServer } = useServerStore()
+  const { server, setServer, currentChannel } = useServerStore()
 
   const getServer = useCallback(async () => {
     try {
       setIsLoading(true)
       if (params) {
+        console.log(params)
         if (typeof params.serverId === 'string') {
           await setServer(params.serverId)
         }
@@ -42,7 +43,7 @@ export default function Server() {
       <div className="fixed inset-y-0 z-20 hidden h-full w-60 flex-col md:flex">
         <ServerSidebar server={server} />
       </div>
-      <main className="h-full md:pl-60">{server.name}</main>
+      <main className="h-full md:pl-60">{server.channels.find(channel => channel.id === currentChannel)?.name}</main>
     </div>
   )
 }

@@ -15,16 +15,13 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { ChannelType } from '@prisma/client'
-import { serverHooks } from 'next/dist/server/app-render/entry-base'
 
 function CreateChannelModal() {
   const { isOpen, onClose, type } = useModal()
 
   const isModalOpen = isOpen && type === 'createChannel'
 
-  const router = useRouter()
-  const { server, updateServer } = useServerStore()
+  const { server, updateServer, setChannel } = useServerStore()
   const [isLoading, setIsLoading] = useState(false)
   
   const form = useForm({

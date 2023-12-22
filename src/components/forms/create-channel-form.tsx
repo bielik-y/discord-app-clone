@@ -42,7 +42,7 @@ function CreateChannelForm({
                 Channel name
               </FormLabel>
               <FormControl>
-                <Input placeholder="Example: Cool Channel" {...field} />
+                <Input autoComplete="off" placeholder="Example: Cool Channel" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
