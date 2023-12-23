@@ -1,5 +1,5 @@
 import { Role } from '@prisma/client'
-import { Server } from '@/types/models'
+import { Server } from '@/types'
 import {
   DropdownMenu,
   DropdownMenuContent,

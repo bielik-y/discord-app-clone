@@ -1,4 +1,4 @@
-import { Server } from '@/types/models'
+import { Server } from '@/types'
 import { useSession } from 'next-auth/react'
 import { ServerHeader } from '@/components/server/server-header'
 import { ScrollArea } from '@/components/ui/scroll-area'

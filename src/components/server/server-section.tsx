@@ -1,4 +1,4 @@
-import { Server, ServerWithMembersWithUsersWithChannels } from '@/types/models'
+import { Server, ServerWithMembersWithUsersWithChannels } from '@/types'
 import { ChannelType, Role } from '@prisma/client'
 import { ActionTooltip } from '../action-tooltip'
 import { Plus, Settings } from 'lucide-react'

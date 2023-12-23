@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'query-string'
 import { useCallback, useEffect, useState } from 'react'
-import { Member } from '@/types/models'
+import { Member } from '@/types'
 import { Spinner } from '@/components/ui/spinner'
 import { ChatHeader } from '@/components/chat/chat-header'
 

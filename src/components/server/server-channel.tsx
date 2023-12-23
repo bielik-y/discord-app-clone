@@ -1,6 +1,6 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import { Channel, Server } from '@/types/models'
+import { Channel, Server } from '@/types'
 import { ChannelType, Role } from '@prisma/client'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'

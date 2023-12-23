@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { create } from 'zustand'
-import { Channel, Server, ServerShort } from '@/types/models'
+import { Channel, Server, ServerShort } from '@/types'
 
 interface ServerStore {
   userServers: ServerShort[]

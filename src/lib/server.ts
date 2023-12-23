@@ -1,4 +1,4 @@
-import { ServerWithMembersWithUsersWithChannels } from '@/types/models'
+import { ServerWithMembersWithUsersWithChannels } from '@/types'
 import { db } from '@/lib/db'
 
 export async function getServerById(serverId: string, userId: string) {

@@ -1,4 +1,4 @@
-import { Channel } from '@/types/models'
+import { Channel } from '@/types'
 import { create } from 'zustand'
 
 export type ModalType =

@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Role } from '@prisma/client'
-import { Member, Server } from '@/types/models'
+import { Member, Server } from '@/types'
 import { useServerStore } from '@/hooks/use-server-store'
 import { ShieldAlert, ShieldCheck } from 'lucide-react'
 import { UserAvatar } from '@/components/user-avatar'

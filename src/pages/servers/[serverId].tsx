@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { Server } from '@/types/models'
+import { Server } from '@/types'
 import { Spinner } from '@/components/ui/spinner'
 import { MainLayout } from '@/components/layout/main-layout'
 import { ServerSidebar } from '@/components/server/server-sidebar'

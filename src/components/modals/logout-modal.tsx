@@ -17,14 +17,14 @@ import { signOut, useSession } from 'next-auth/react'
 function LogoutModal() {
   const { data: session } = useSession()
   const { isOpen, onClose, type } = useModal()
-  const { resetServers } = useServerStore()
+  const { resetServer } = useServerStore()
   
   const isModalOpen = isOpen && type === 'logout'
 
   async function handleSubmit() {
     try {
       signOut()
-      resetServers()
+      resetServer()
       onClose()
     } catch (err) {
       console.log(err)
