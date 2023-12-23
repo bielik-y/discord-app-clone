@@ -28,7 +28,7 @@ function DeleteChannelModal() {
         url: "/api/server/channel",
         query: {
           serverId: server?.id,
-          channelId: data?.channel.id
+          channelId: data?.channel?.id
         }
       })
       const res = await axios.delete(url)

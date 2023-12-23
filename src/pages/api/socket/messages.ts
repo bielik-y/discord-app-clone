@@ -86,7 +86,6 @@ export default async function handler(
       res.socket?.server?.io?.emit(channelKey, message)
 
       res.status(201).json(message)
-
     } catch (err) {
       res.status(500).json({ message: 'Server error' })
       return

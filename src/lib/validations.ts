@@ -45,3 +45,9 @@ export const chatInputSchema = z.object({
 })
 
 export type ChatInputSchema = z.infer<typeof chatInputSchema>
+
+export const chatFileSchema = z.object({
+  fileUrl: z.string().min(1, 'Attachment is required')
+})
+
+export type ChatFileSchema = z.infer<typeof chatFileSchema>

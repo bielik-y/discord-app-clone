@@ -6,6 +6,7 @@ import { ChatInputSchema, chatInputSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
+import { useModal } from '@/hooks/use-modal-store'
 
 interface ChatInputProps {
   name: string
@@ -15,6 +16,7 @@ interface ChatInputProps {
 }
 
 function ChatInput({ name, apiUrl, query, type }: ChatInputProps) {
+  const { onOpen } = useModal()
   const form = useForm<ChatInputSchema>({
     resolver: zodResolver(chatInputSchema),
     defaultValues: {
@@ -52,7 +54,7 @@ function ChatInput({ name, apiUrl, query, type }: ChatInputProps) {
                 <div className="relative p-4 pb-5">
                   <button
                     type="button"
-                    onClick={() => {}}
+                    onClick={() => onOpen("messageFile", {apiUrl, query})}
                     className="absolute left-8 top-7 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-zinc-400 transition hover:bg-zinc-500 dark:bg-zinc-500 dark:hover:bg-zinc-400"
                   >
                     <Plus className="h-4 w-4 text-white dark:text-neutral-800" />

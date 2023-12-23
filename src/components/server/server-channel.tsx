@@ -32,7 +32,7 @@ function ServerChannel({ channel, server, role }: ServerChannelProps) {
   // Resolve onClick conflict between redirect and delete button
   function handleAction(e: React.MouseEvent) {
     e.stopPropagation()
-    onOpen('deleteChannel', channel)
+    onOpen('deleteChannel', {channel})
   }
 
   return (
