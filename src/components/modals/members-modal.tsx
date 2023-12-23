@@ -61,7 +61,7 @@ function MembersModal() {
         if (server) {
           setLoadingId(memberId)
           const url = qs.stringifyUrl({
-            url: `/api/server/members/${memberId}`,
+            url: `/api/server/member/${memberId}`,
             query: { serverId: server?.id }
           })
           const { data } = await axios.patch(url, { role: newRole })
@@ -80,7 +80,7 @@ function MembersModal() {
       if (server) {
         setLoadingId(memberId)
         const url = qs.stringifyUrl({
-          url: `/api/server/members/${memberId}`,
+          url: `/api/server/member/${memberId}`,
           query: { serverId: server?.id }
         })
         const { data } = await axios.delete(url)

@@ -1,10 +1,9 @@
 import { cn } from '@/lib/utils'
-import { Member, Server } from '@/types/models'
 import { Role } from '@prisma/client'
-import { ShieldAlert, ShieldCheck } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
-import { UserAvatar } from '../user-avatar'
+import { Member, Server } from '@/types/models'
 import { useServerStore } from '@/hooks/use-server-store'
+import { ShieldAlert, ShieldCheck } from 'lucide-react'
+import { UserAvatar } from '@/components/user-avatar'
 
 interface ServerMemberProps {
   member: Member
@@ -37,14 +36,14 @@ function ServerMember({ member, server, position }: ServerMemberProps) {
     >
       <UserAvatar
         className="h-8 w-8 md:h-8 md:w-8"
-        member={member}
+        memberName={member.user.username}
         positionForAvatar={position}
       />
       <p
         className={cn(
           'text-sm font-semibold text-zinc-500 transition group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300',
           currentMember === member.id &&
-            'text-primary dark:text-zinc-200 dark:group-hover:text-white'
+            'text-black dark:text-zinc-200 dark:group-hover:text-white'
         )}
       >
         {member.user.username}

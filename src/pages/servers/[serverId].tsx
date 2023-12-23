@@ -7,6 +7,7 @@ import { ServerSidebar } from '@/components/server/server-sidebar'
 import { useServerStore } from '@/hooks/use-server-store'
 import { Channel } from '@/components/channel'
 import { MobileToggle } from '@/components/mobile-toggle'
+import { Conversation } from '@/components/conversation'
 
 export default function Server() {
   const params = useParams()
@@ -46,6 +47,11 @@ export default function Server() {
     channelId: currentChannel!
   }
 
+  const memberParams = {
+    serverId: server.id,
+    memberId: currentMember!
+  }
+
   return (
     <div className="h-full">
       <MobileToggle />
@@ -54,10 +60,9 @@ export default function Server() {
       </div>
       <main className="h-full md:pl-60">
         {currentChannel && !currentMember && <Channel params={channelParams} />}
-        {currentMember &&
-          !currentChannel &&
-          server.members.find((member) => member.id === currentMember)?.user
-            .username}
+        {currentMember && !currentChannel && (
+          <Conversation params={memberParams} />
+        )}
       </main>
     </div>
   )

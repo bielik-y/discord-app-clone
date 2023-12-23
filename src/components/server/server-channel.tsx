@@ -1,11 +1,11 @@
+import React from 'react'
 import { cn } from '@/lib/utils'
 import { Channel, Server } from '@/types/models'
 import { ChannelType, Role } from '@prisma/client'
-import { Hash, Mic, Trash, Video, Lock } from 'lucide-react'
-import { ActionTooltip } from '../action-tooltip'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
-import React from 'react'
+import { Hash, Mic, Trash, Video, Lock } from 'lucide-react'
+import { ActionTooltip } from '@/components/action-tooltip'
 
 interface ServerChannelProps {
   channel: Channel
@@ -48,7 +48,7 @@ function ServerChannel({ channel, server, role }: ServerChannelProps) {
         className={cn(
           'line-clamp-1 text-sm font-semibold text-zinc-500 transition group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300',
           currentChannel === channel.id &&
-            'text-primary dark:text-zinc-200 dark:group-hover:text-white'
+            'text-black dark:text-zinc-200 dark:group-hover:text-white'
         )}
       >
         {channel.name}

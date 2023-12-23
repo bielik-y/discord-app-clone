@@ -1,9 +1,8 @@
-import { Member } from '@/types/models'
 import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
 interface UserAvatarProps {
-  member: Member
+  memberName: string
   className?: string
   positionForAvatar?: number
 }
@@ -25,7 +24,7 @@ function getRandomGradient(position: number) {
 }
 
 function UserAvatar({
-  member,
+  memberName,
   className,
   positionForAvatar = 0
 }: UserAvatarProps) {
@@ -36,7 +35,7 @@ function UserAvatar({
           positionForAvatar
         )}`}
       >
-        {member.user.username.slice(0, 2).toUpperCase()}
+        {memberName.slice(0, 1).toUpperCase()}
       </AvatarFallback>
     </Avatar>
   )
