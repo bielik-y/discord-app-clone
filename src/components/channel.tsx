@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Spinner } from '@/components/ui/spinner'
 import { Channel } from '@prisma/client'
 import { ChatHeader } from '@/components/chat/chat-header'
+import { ChatInput } from '@/components/chat/chat-input'
 
 interface ChannelProps {
   params: {
@@ -47,11 +48,18 @@ function Channel({ params }: ChannelProps) {
     )
 
   return (
-    <div className="flex h-full flex-col bg-white dark:bg-neutral-800">
+    <div className="flex h-screen flex-col bg-white dark:bg-neutral-800">
       <ChatHeader
         serverId={params.serverId}
         name={channel?.name}
         type="channel"
+      />
+      <div className="flex-1">Future messages</div>
+      <ChatInput
+        name={channel.name}
+        type="channel"
+        apiUrl="/api/socket/messages"
+        query={{ channelId: channel.id, serverId: channel.serverId }}
       />
     </div>
   )

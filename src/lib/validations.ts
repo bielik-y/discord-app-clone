@@ -39,3 +39,9 @@ export type ChannelSchema = {
   name: string,
   type: string
 }
+
+export const chatInputSchema = z.object({
+  content: z.string().min(1)
+})
+
+export type ChatInputSchema = z.infer<typeof chatInputSchema>
