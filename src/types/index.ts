@@ -4,10 +4,21 @@ import {
   User as UserDB,
   Channel as ChannelDB
 } from '@prisma/client'
+import { NextApiResponse } from 'next'
+import { Server as NetServer, Socket} from 'net'
+import { Server as SocketIOServer } from 'socket.io'
 
 export type ServerWithMembersWithUsersWithChannels = ServerDB & {
   members: (MemberDB & { user: UserDB })[]
   channels: ChannelDB[]
+}
+
+export type NextApiResponseServerIO = NextApiResponse & {
+  socket: Socket & {
+    server: NetServer & {
+      io: SocketIOServer
+    }
+  }
 }
 
 export interface ServerShort {

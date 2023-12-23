@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next'
 import { getServerSessionUser } from '@/lib/auth'
 import { InitialModal } from '@/components/modals/initial-modal'
-import { getFirstServer } from '@/lib/db'
+import { getFirstServer } from '@/lib/server'
 
 export default function Home() {
   return (

@@ -7,6 +7,7 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { SessionProvider } from 'next-auth/react'
 import { ThemeProvider } from 'next-themes'
 import { ModalProvider } from '@/components/providers/modal-provider'
+import { SocketProvider } from '@/components/providers/socket-provider'
 
 // Logic for shared layouts in Page router (prevents layout rerenders)
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -36,8 +37,10 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           enableSystem={false}
           storageKey="chat-app-theme"
         >
-          <Component {...pageProps} />
-          <ModalProvider/>
+          <SocketProvider>
+            <Component {...pageProps} />
+          </SocketProvider>
+          <ModalProvider />
           <ModeToggle />
         </ThemeProvider>
       </SessionProvider>
