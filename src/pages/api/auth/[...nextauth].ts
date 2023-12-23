@@ -1,5 +1,6 @@
 import { verifyPassword } from '@/lib/auth'
-import { db, getFirstServer } from '@/lib/db'
+import { db } from '@/lib/db'
+import { getFirstServer } from '@/lib/server'
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 

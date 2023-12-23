@@ -1,4 +1,4 @@
-import { db, excludeNonClientData } from '@/lib/db'
+import { db } from '@/lib/db'
 import { getServerSessionUser } from '@/lib/auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 

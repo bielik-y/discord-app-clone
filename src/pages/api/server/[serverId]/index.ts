@@ -1,5 +1,6 @@
-import { db, excludeNonClientData, getServerDataById } from '@/lib/db'
+import { db } from '@/lib/db'
 import { getServerSessionUser } from '@/lib/auth'
+import { excludeNonClientData, getServerDataById } from '@/lib/server'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
@@ -107,11 +108,10 @@ export default async function handler(
         res.status(400).json({ message: 'Server data not available' })
         return
       } else
-        res.status(200).json({message: 'Server was successfully deleted'})
+        res.status(200).json({ message: 'Server was successfully deleted' })
     } catch (err) {
       res.status(500).json({ message: 'Server error' })
       return
     }
-
   }
 }

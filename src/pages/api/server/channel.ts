@@ -1,10 +1,10 @@
-import { db, excludeNonClientData } from '@/lib/db'
+import { z } from 'zod'
+import { db } from '@/lib/db'
+import { excludeNonClientData } from '@/lib/server'
 import { getServerSessionUser } from '@/lib/auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { channelSchema } from '@/lib/validations'
-import { z } from 'zod'
 import { Role } from '@prisma/client'
-import { channel } from 'diagnostics_channel'
 
 export default async function handler(
   req: NextApiRequest,

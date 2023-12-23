@@ -1,5 +1,6 @@
-import { db, excludeNonClientData } from '@/lib/db'
+import { db } from '@/lib/db'
 import { v4 as uuid } from 'uuid'
+import { excludeNonClientData } from '@/lib/server'
 import { getServerSessionUser } from '@/lib/auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -41,7 +42,7 @@ export default async function handler(
           }
         }
       })
-      
+
       if (!server) {
         res.status(400).json({ message: 'Changing data is not available' })
         return
