@@ -1,12 +1,13 @@
 import axios from 'axios'
 import qs from 'query-string'
 import { useForm } from 'react-hook-form'
-import { Plus, Smile } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { ChatInputSchema, chatInputSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { useModal } from '@/hooks/use-modal-store'
+import { EmojiPicker } from '@/components/emoji-picker'
 
 interface ChatInputProps {
   name: string
@@ -69,7 +70,7 @@ function ChatInput({ name, apiUrl, query, type }: ChatInputProps) {
                     className="border-0 border-none bg-zinc-200/90 px-14 py-6 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-neutral-700/50 dark:text-zinc-200"
                   />
                   <div className="absolute right-8 top-7">
-                    <Smile className="text-zinc-600 transition hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300" />
+                    <EmojiPicker onChange={(emoji: string) => field.onChange(`${field.value}${emoji}`)}/>
                   </div>
                 </div>
               </FormControl>
