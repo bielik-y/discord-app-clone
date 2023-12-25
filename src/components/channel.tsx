@@ -2,9 +2,10 @@ import axios from 'axios'
 import qs from 'query-string'
 import { useCallback, useEffect, useState } from 'react'
 import { Spinner } from '@/components/ui/spinner'
-import { Channel } from '@prisma/client'
+import { Channel, Member } from '@prisma/client'
 import { ChatHeader } from '@/components/chat/chat-header'
 import { ChatInput } from '@/components/chat/chat-input'
+import { ChatMessages } from '@/components/chat/chat-messages'
 
 interface ChannelProps {
   params: {
@@ -16,6 +17,7 @@ interface ChannelProps {
 function Channel({ params }: ChannelProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [channel, setChannel] = useState<Channel>()
+  const [member, setMember] = useState<Member>()
 
   const getChannel = useCallback(async () => {
     try {
@@ -29,6 +31,7 @@ function Channel({ params }: ChannelProps) {
       })
       const { data } = await axios.get(url)
       setChannel(data.channel)
+      setMember(data.member)
     } catch (err) {
       console.log(err)
     } finally {
@@ -40,7 +43,7 @@ function Channel({ params }: ChannelProps) {
     getChannel()
   }, [getChannel])
 
-  if (isLoading || !channel)
+  if (isLoading || !channel || !member)
     return (
       <div className="h-screen w-full">
         <Spinner loading={isLoading} />
@@ -54,7 +57,21 @@ function Channel({ params }: ChannelProps) {
         name={channel?.name}
         type="channel"
       />
-      <div className="flex-1">Future messages</div>
+      <ChatMessages 
+        member={member}
+        name={channel.name}
+        chatId={channel.id}
+        serverId={channel.serverId}
+        type='channel'
+        apiUrl='/api/server/messages'
+        socketUrl='/api/socket/messages'
+        socketQuery={{
+          channelId: channel.id,
+          serverId: channel.serverId
+        }}
+        paramKey='channelId'
+        paramValue={channel.id}
+      />
       <ChatInput
         name={channel.name}
         type="channel"

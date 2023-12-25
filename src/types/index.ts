@@ -2,10 +2,11 @@ import {
   Server as ServerDB,
   Member as MemberDB,
   User as UserDB,
-  Channel as ChannelDB
+  Channel as ChannelDB,
+  Message as MessageDB
 } from '@prisma/client'
 import { NextApiResponse } from 'next'
-import { Server as NetServer, Socket} from 'net'
+import { Server as NetServer, Socket } from 'net'
 import { Server as SocketIOServer } from 'socket.io'
 
 export type ServerWithMembersWithUsersWithChannels = ServerDB & {
@@ -18,6 +19,12 @@ export type NextApiResponseServerIO = NextApiResponse & {
     server: NetServer & {
       io: SocketIOServer
     }
+  }
+}
+
+export type MessageWithMemberWithProfile = MessageDB & {
+  member: MemberDB & {
+    user: UserDB
   }
 }
 

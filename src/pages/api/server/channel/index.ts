@@ -175,7 +175,7 @@ export default async function handler(
         return
       }
 
-      res.status(200).json({ channel: channel })
+      res.status(200).json({ channel: channel, member: member })
       return
     } catch (err) {
       res.status(500).json({ message: 'Server error' })
