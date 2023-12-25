@@ -12,6 +12,7 @@ export type ModalType =
   | 'logout'
   | 'deleteChannel'
   | 'messageFile'
+  | 'deleteMessage'
 
 interface ModalData {
   channel?: Channel

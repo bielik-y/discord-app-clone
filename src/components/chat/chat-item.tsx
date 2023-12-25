@@ -13,6 +13,8 @@ import { UserAvatar } from '@/components/user-avatar'
 import { ActionTooltip } from '@/components/action-tooltip'
 import { Edit, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
+import { useModal } from '@/hooks/use-modal-store'
+import { useServerStore } from '@/hooks/use-server-store'
 
 const roleIconMap = {
   [Role.GUEST]: null,
@@ -50,7 +52,8 @@ function ChatItem({
   currentMember
 }: ChatItemProps) {
   const [isEditing, setIsEditing] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const { setMember } = useServerStore()
+  const { onOpen } = useModal()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -73,8 +76,7 @@ function ChatItem({
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
-      if (event.key === 'Escape' || event.key === 27)
-        setIsEditing(false)
+      if (event.key === 'Escape' || event.key === 27) setIsEditing(false)
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => {
@@ -91,9 +93,13 @@ function ChatItem({
       await axios.patch(url, values)
       setIsEditing(false)
       form.reset()
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
+  }
+
+  function handleMemberClick() {
+    if (member.id !== currentMember.id) setMember(member.id)
   }
 
   return (
@@ -108,7 +114,10 @@ function ChatItem({
         <div className="flex w-full flex-col">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
-              <p className="cursor-pointer text-sm font-semibold hover:underline">
+              <p
+                onClick={handleMemberClick}
+                className="cursor-pointer text-sm font-semibold hover:underline"
+              >
                 {member.user.username}
               </p>
               <ActionTooltip label={member.role} align="center" side="right">
@@ -206,7 +215,15 @@ function ChatItem({
             </ActionTooltip>
           )}
           <ActionTooltip label="Delete" align="center" side="top">
-            <Trash className="ml-auto h-4 w-4 cursor-pointer text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300" />
+            <Trash
+              onClick={() =>
+                onOpen('deleteMessage', {
+                  apiUrl: `${socketUrl}/${id}`,
+                  query: socketQuery
+                })
+              }
+              className="ml-auto h-4 w-4 cursor-pointer text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300"
+            />
           </ActionTooltip>
         </div>
       )}

@@ -31,7 +31,7 @@ export default async function handler(
     return
   }
 
-  if (!content) {
+  if (!content && req.method !== 'DELETE') {
     res.status(400).json({ message: 'Content is missing' })
     return
   }
