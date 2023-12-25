@@ -38,8 +38,6 @@ function ChatInput({ name, apiUrl, query, type }: ChatInputProps) {
     } catch(err) {
       console.log(err)
     }
-
-    console.log(value)
     form.reset()
   }
 

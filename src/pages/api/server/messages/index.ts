@@ -3,7 +3,7 @@ import { getServerSessionUser } from '@/lib/auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Message } from '@prisma/client'
 
-const MESSAGES_BATCH = 10
+const MESSAGES_BATCH = 12
 
 export default async function handler(
   req: NextApiRequest,
