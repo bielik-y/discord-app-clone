@@ -1,40 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fullstack Next.js Chat app
 
-## Getting Started
+## Description
 
-First, run the development server:
+I developed this project to strengthen my Next.js knowledge and recall key points of working with WebSockets. [Discord](https://discord.com/) was taken as design & features reference. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Main used technologies:**
+- **Next.js 14** (Page router: chosen due to lack of Socket.io App Router support at the time of dev)
+- **NextAuth** (Credentials authorization)
+- **Prisma** (MySQL)
+- **Socket.io** (WebSockets)
+- **Zustand** (State management library)
+- **shadcn/ui** (UI components)
+- **TailwindCSS** (Styling)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Demo
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+At this moment project isn't deployed to anywhere but here is demonstrative gif with my interactions with app
+(speeded up)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+![Gif with my interactions wth app](demo.gif)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- SignUp & SignIn with email & password
+- Server creation and its customization
+- Create text, audio and video call channels
+- Member management (kick, change role)
+- Invite users to server with generated link 
+- Real-time messaging with sending images & emojis
+- Delete & Edit messages in real time
+- Message pagination & fetching on scroll 
+- Websocket fallback: Polling every 1s
+- Fully responsive UI
+- Light / Dark mode switcher
+- Error handling on client and server
 
-## Learn More
+## Setting up 
 
-To learn more about Next.js, take a look at the following resources:
+1. Step 1: Install all dependencies `npm i`
+2. Step 2: Create .env file and add necessary variables (follow `env.example` file)
+3. Step 3: Add DB and generate prisma schema `npx prisma generate`  & 
+`npx prisma db push`
+4. Start the app `npm run dev`
+(next-env.d.ts should be generated automatically during build)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## TODO
+- Chat update optimization: Now messages are sent using POST request. This function is implemented this way to provide socket fallback but it causes a little delay for message appearing in the chat area. So I'm planning to provide sending messages using WebSocket primarily.
+- User avatar: I wanna add possibility to upload user profile photo during registration for better app appearance.
