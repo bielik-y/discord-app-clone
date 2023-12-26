@@ -23,7 +23,11 @@ export async function getServerSessionUser(
       }),
   res: NextApiResponse | ServerResponse<IncomingMessage>
 ) {
-  const session = await getServerSession(req, res, authOptions)
-  if (!session || !session.user) return null
-  else return session.user as User
+  try {
+    const session = await getServerSession(req, res, authOptions)
+    if (!session || !session.user) return null
+    else return session.user as User
+  } catch {
+    return null
+  }
 }
