@@ -10,17 +10,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === 'POST') {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
+  if (
+    req.method !== 'GET' &&
+    req.method !== 'POST' &&
+    req.method !== 'DELETE'
+  ) {
+    res.status(405).json({ message: 'Request method not supported' })
+    return
+  }
 
+  const user = await getServerSessionUser(req, res)
+  if (!user) {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
+
+  if (req.method === 'POST') {
     const { serverId } = req.query
     const data = req.body
 
-    if (typeof serverId !== 'string') {
+    if (!serverId || typeof serverId !== 'string') {
       res.status(400).json({ message: 'Invalid or missing request params' })
       return
     }
@@ -84,15 +93,14 @@ export default async function handler(
       return
     }
   } else if (req.method === 'DELETE') {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-
     const { serverId, channelId } = req.query
 
-    if (typeof serverId !== 'string' || typeof channelId !== 'string') {
+    if (
+      !serverId ||
+      !channelId ||
+      typeof serverId !== 'string' ||
+      typeof channelId !== 'string'
+    ) {
       res.status(400).json({ message: 'Invalid or missing request params' })
       return
     }
@@ -143,15 +151,14 @@ export default async function handler(
       return
     }
   } else if (req.method === 'GET') {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-
     const { serverId, channelId } = req.query
 
-    if (typeof serverId !== 'string' || typeof channelId !== 'string') {
+    if (
+      !serverId ||
+      !channelId ||
+      typeof serverId !== 'string' ||
+      typeof channelId !== 'string'
+    ) {
       res.status(400).json({ message: 'Invalid or missing request params' })
       return
     }

@@ -7,20 +7,31 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (req.method !== 'PATCH' && req.method !== 'DELETE') {
+    res.status(405).json({ message: 'Request method not supported' })
+    return
+  }
+
+  const user = await getServerSessionUser(req, res)
+  if (!user) {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
+
+  const { memberId, serverId } = req.query
+
+  if (
+    !memberId ||
+    !serverId ||
+    typeof memberId !== 'string' ||
+    typeof serverId !== 'string'
+  ) {
+    res.status(400).json({ message: 'Invalid or missing request params' })
+    return
+  }
+
   if (req.method === 'PATCH') {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-
-    const { memberId, serverId } = req.query
     const { role } = req.body
-
-    if (typeof memberId !== 'string' || typeof serverId !== 'string') {
-      res.status(400).json({ message: 'Invalid or missing request params' })
-      return
-    }
 
     try {
       const server = await db.server.update({
@@ -67,19 +78,6 @@ export default async function handler(
       return
     }
   } else if ((req.method = 'DELETE')) {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-
-    const { memberId, serverId } = req.query
-
-    if (typeof memberId !== 'string' || typeof serverId !== 'string') {
-      res.status(400).json({ message: 'Invalid or missing request params' })
-      return
-    }
-
     try {
       const server = await db.server.update({
         where: {

@@ -15,7 +15,7 @@ export default async function handler(
       return
     }
     const { serverId } = req.query
-    if (typeof serverId !== 'string') throw new Error('Invalid query type')
+    if (!serverId || typeof serverId !== 'string') throw new Error('Invalid query type')
 
     try {
       const server = await db.server.update({

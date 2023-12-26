@@ -7,19 +7,28 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (
+    req.method !== 'GET' &&
+    req.method !== 'PATCH' &&
+    req.method !== 'DELETE'
+  ) {
+    res.status(405).json({ message: 'Request method not supported' })
+    return
+  }
+
+  const user = await getServerSessionUser(req, res)
+  if (!user) {
+    res.status(401).json({ message: 'Unauthorized' })
+    return
+  }
+
+  const { serverId } = req.query
+  if (!serverId || typeof serverId !== 'string') {
+    res.status(400).json({ message: 'Invalid request params' })
+    return
+  }
+
   if (req.method === 'GET') {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-
-    const { serverId } = req.query
-    if (typeof serverId !== 'string') {
-      res.status(400).json({ message: 'Invalid request params' })
-      return
-    }
-
     try {
       const server = await getServerDataById(serverId, user.id)
       if (!server) {
@@ -33,18 +42,8 @@ export default async function handler(
       res.status(500).json({ message: 'Server error' })
       return
     }
-  } else if (req.method === 'PATCH') {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-    const { serverId } = req.query
-    if (typeof serverId !== 'string') {
-      res.status(400).json({ message: 'Invalid request params' })
-      return
-    }
-
+  } 
+  else if (req.method === 'PATCH') {
     const { name, imageUrl } = req.body
     try {
       const server = await db.server.update({
@@ -84,18 +83,6 @@ export default async function handler(
       return
     }
   } else if (req.method === 'DELETE') {
-    const user = await getServerSessionUser(req, res)
-    if (!user) {
-      res.status(401).json({ message: 'Unauthorized' })
-      return
-    }
-
-    const { serverId } = req.query
-    if (typeof serverId !== 'string') {
-      res.status(400).json({ message: 'Invalid request params' })
-      return
-    }
-
     try {
       const server = await db.server.delete({
         where: {
