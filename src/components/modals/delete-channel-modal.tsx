@@ -3,6 +3,8 @@ import qs from 'query-string'
 import { useState } from 'react'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Button } from '@/components/ui/button'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import {
@@ -34,10 +36,9 @@ function DeleteChannelModal() {
       const res = await axios.delete(url)
       await updateServer(res.data.server)
       setChannel(res.data.server.channels[0].id)
-      // router.replace('/')
       onClose()
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

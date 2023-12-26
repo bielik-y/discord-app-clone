@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useOrigin } from '@/hooks/use-origin'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -43,7 +45,7 @@ function InviteModal() {
       )
       updateServer(data.server)
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Member, Role, User } from '@prisma/client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { UserAvatar } from '@/components/user-avatar'
@@ -94,7 +96,7 @@ function ChatItem({
       setIsEditing(false)
       form.reset()
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     }
   }
 

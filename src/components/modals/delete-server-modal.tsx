@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Button } from '@/components/ui/button'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import {
@@ -30,7 +32,7 @@ function DeleteServerModal() {
       router.replace('/')
       onClose()
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

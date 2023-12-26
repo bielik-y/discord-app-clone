@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { ServerSchema, serverSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import { CreateServerForm } from '@/components/forms/create-server-form'
 import {
@@ -37,13 +39,7 @@ function InitialModal() {
       const { data } = await axios.post('/api/user/servers', values)
       router.replace(`/servers/${data.serverId}`)
     } catch (err: any) {
-      if (err.response) {
-        console.log(err.response)
-      } else if (err.request) {
-        console.log(err.request)
-      } else {
-        console.log(err.message)
-      }
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

@@ -4,6 +4,8 @@ import { Role } from '@prisma/client'
 import { useState } from 'react'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { UserAvatar } from '@/components/user-avatar'
 import {
@@ -68,7 +70,7 @@ function MembersModal() {
           updateServer(data.server)
         }
       } catch (err) {
-        console.log(err)
+        toast(<ErrorToast error={err} />)
       } finally {
         setLoadingId('')
       }

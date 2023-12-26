@@ -2,11 +2,12 @@ import axios from 'axios'
 import qs from 'query-string'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
 import { channelSchema, ChannelSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useServerStore } from '@/hooks/use-server-store'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import { CreateChannelForm } from '@/components/forms/create-channel-form'
 import {
@@ -50,13 +51,7 @@ function CreateChannelModal() {
       await updateServer(data.server)
       handleClose()
     } catch (err: any) {
-      if (err.response) {
-        console.log(err.response)
-      } else if (err.request) {
-        console.log(err.request)
-      } else {
-        console.log(err.message)
-      }
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

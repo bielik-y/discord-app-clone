@@ -5,6 +5,8 @@ import { useModal } from '@/hooks/use-modal-store'
 import { serverSchema, ServerSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useServerStore } from '@/hooks/use-server-store'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import { CreateServerForm } from '@/components/forms/create-server-form'
 import {
@@ -60,13 +62,7 @@ function EditServerModal() {
         onClose()
       }
     } catch (err: any) {
-      if (err.response) {
-        console.log(err.response)
-      } else if (err.request) {
-        console.log(err.request)
-      } else {
-        console.log(err.message)
-      }
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

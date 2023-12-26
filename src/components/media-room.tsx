@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import {
   LiveKitRoom,
   VideoConference,
@@ -29,7 +31,7 @@ function MediaRoom({ chatId, video, audio }: MediaRoomProps) {
         )
         setToken(data.token)
       } catch (err) {
-        console.log(err)
+        toast(<ErrorToast error={err} />)
       }
     })()
   }, [chatId, user])

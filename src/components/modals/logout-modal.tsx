@@ -1,9 +1,8 @@
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useModal } from '@/hooks/use-modal-store'
 import { useServerStore } from '@/hooks/use-server-store'
 import { Button } from '@/components/ui/button'
-import { LoadingOverlay } from '@/components/loading-overlay'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import {
   Dialog,
   DialogDescription,
@@ -24,10 +23,10 @@ function LogoutModal() {
   async function handleSubmit() {
     try {
       signOut()
-      resetServer()
       onClose()
+      resetServer()
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     }
   }
 

@@ -1,4 +1,6 @@
 import { useCallback, useEffect } from 'react'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Separator } from '@/components/ui/separator'
 import { NavAction } from '@/components/navbar/nav-action'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -14,7 +16,7 @@ function NavSidebar() {
     try {
       await updateUserServers()
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     }
   }, [updateUserServers])
 

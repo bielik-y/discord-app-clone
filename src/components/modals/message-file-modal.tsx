@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { useModal } from '@/hooks/use-modal-store'
 import { ChatFileSchema, chatFileSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { SendFileForm } from '@/components/forms/send-file-form'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import {
@@ -43,7 +45,7 @@ function MessageFileModal() {
       await axios.post(url, {...values, content: values.fileUrl})
       handleClose()
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     }
   }
 

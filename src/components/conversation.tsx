@@ -2,6 +2,8 @@ import axios from 'axios'
 import qs from 'query-string'
 import { useCallback, useEffect, useState } from 'react'
 import { Conversation, Member, User } from '@prisma/client'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Spinner } from '@/components/ui/spinner'
 import { ChatHeader } from '@/components/chat/chat-header'
 import { ChatMessages } from '@/components/chat/chat-messages'
@@ -36,7 +38,7 @@ function Conversation({ params }: ConversationProps) {
       setCurrentMember(data.currentMember)
       setConversation(data.conversation)
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

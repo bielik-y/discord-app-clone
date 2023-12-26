@@ -9,6 +9,7 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { ModalProvider } from '@/components/providers/modal-provider'
 import { QueryProvider } from '@/components/providers/query-provider'
 import { SocketProvider } from '@/components/providers/socket-provider'
+import { Toaster } from '@/components/ui/sonner'
 
 // Logic for shared layouts in Page router (prevents layout rerenders)
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -40,6 +41,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         >
           <SocketProvider>
             <QueryProvider>
+              <Toaster />
               <Component {...pageProps} />
             </QueryProvider>
           </SocketProvider>

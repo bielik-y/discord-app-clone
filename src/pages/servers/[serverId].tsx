@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { Server } from '@/types'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Spinner } from '@/components/ui/spinner'
 import { MainLayout } from '@/components/layout/main-layout'
 import { ServerSidebar } from '@/components/server/server-sidebar'
@@ -23,7 +25,7 @@ export default function Server() {
         }
       }
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

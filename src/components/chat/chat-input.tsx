@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { Plus } from 'lucide-react'
 import { ChatInputSchema, chatInputSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { useModal } from '@/hooks/use-modal-store'
@@ -34,9 +36,8 @@ function ChatInput({ name, apiUrl, query, type }: ChatInputProps) {
         query,
       })
       await axios.post(url, value)
-
     } catch(err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     }
     form.reset()
   }

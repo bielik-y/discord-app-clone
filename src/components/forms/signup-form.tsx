@@ -1,10 +1,13 @@
 import axios from 'axios'
+import { toast } from 'sonner'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { registerSchema, RegisterSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { ErrorToast } from '@/components/error-toast'
+import { SuccessToast } from '@/components/success-toast'
 import { LoadingOverlay } from '@/components/loading-overlay'
 import {
   Form,
@@ -33,15 +36,10 @@ function SignUpForm({ switchModeHandler }: { switchModeHandler: () => void }) {
     try {
       setIsLoading(true)
       await axios.post('/api/auth/signup', values)
+      toast(<SuccessToast />)
       switchModeHandler()
     } catch (err: any) {
-      if (err.response) {
-        console.log(err.response)
-      } else if (err.request) {
-        console.log(err.request)
-      } else {
-        console.log(err.message)
-      }
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }

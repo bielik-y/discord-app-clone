@@ -3,6 +3,8 @@ import qs from 'query-string'
 import { useCallback, useEffect, useState } from 'react'
 import { Spinner } from '@/components/ui/spinner'
 import { Channel, Member } from '@prisma/client'
+import { toast } from 'sonner'
+import { ErrorToast } from '@/components/error-toast'
 import { ChatHeader } from '@/components/chat/chat-header'
 import { ChatInput } from '@/components/chat/chat-input'
 import { ChatMessages } from '@/components/chat/chat-messages'
@@ -34,7 +36,7 @@ function Channel({ params }: ChannelProps) {
       setChannel(data.channel)
       setMember(data.member)
     } catch (err) {
-      console.log(err)
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }
