@@ -1,9 +1,11 @@
 import axios from 'axios'
 import qs from 'query-string'
 import { useCallback, useEffect, useState } from 'react'
-import { Member } from '@/types'
+import { Conversation, Member, User } from '@prisma/client'
 import { Spinner } from '@/components/ui/spinner'
 import { ChatHeader } from '@/components/chat/chat-header'
+import { ChatMessages } from '@/components/chat/chat-messages'
+import { ChatInput } from '@/components/chat/chat-input'
 
 interface ConversationProps {
   params: {
@@ -14,7 +16,10 @@ interface ConversationProps {
 
 function Conversation({ params }: ConversationProps) {
   const [isLoading, setIsLoading] = useState(false)
- const [ member, setMember] = useState<Member>()
+
+  const [member, setMember] = useState<Member & { user: User }>()
+  const [currentMember, setCurrentMember] = useState<Member & { user: User }>()
+  const [conversation, setConversation] = useState<Conversation>()
 
   const getMember = useCallback(async () => {
     try {
@@ -28,6 +33,8 @@ function Conversation({ params }: ConversationProps) {
       })
       const { data } = await axios.get(url)
       setMember(data.otherMember)
+      setCurrentMember(data.currentMember)
+      setConversation(data.conversation)
     } catch (err) {
       console.log(err)
     } finally {
@@ -39,7 +46,7 @@ function Conversation({ params }: ConversationProps) {
     getMember()
   }, [getMember])
 
-  if (isLoading || !member)
+  if (isLoading || !member || !currentMember || !conversation)
     return (
       <div className="h-screen w-full">
         <Spinner loading={isLoading} />
@@ -47,11 +54,33 @@ function Conversation({ params }: ConversationProps) {
     )
 
   return (
-    <div className="flex h-full flex-col bg-white dark:bg-neutral-800">
+    <div className="flex h-screen flex-col bg-white dark:bg-neutral-800">
       <ChatHeader
         serverId={params.serverId}
         name={member?.user.username}
         type="conversation"
+      />
+      <ChatMessages
+        member={currentMember}
+        name={member.user.username}
+        chatId={conversation.id}
+        serverId={params.serverId}
+        type="conversation"
+        apiUrl="/api/server/direct-messages"
+        paramKey="conversationId"
+        paramValue={conversation.id}
+        socketUrl="/api/socket/direct-messages"
+        socketQuery={{
+          conversationId: conversation.id
+        }}
+      />
+      <ChatInput 
+      name={member.user.username}
+      type='conversation'
+      apiUrl="/api/socket/direct-messages"
+      query={{
+        conversationId: conversation.id
+      }}
       />
     </div>
   )

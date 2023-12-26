@@ -50,6 +50,8 @@ export default async function handler(
       const otherMember = memberOne.userId === user.id ? memberTwo : memberOne
 
       res.status(200).json({
+        conversation: conversation, 
+        currentMember: currentMember,
         otherMember: otherMember
       })
       

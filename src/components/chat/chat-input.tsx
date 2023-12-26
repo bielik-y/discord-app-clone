@@ -63,7 +63,7 @@ function ChatInput({ name, apiUrl, query, type }: ChatInputProps) {
                     autoComplete="off"
                     disabled={isLoading}
                     placeholder={`Message ${
-                      type === 'conversation' ? name : '#' + name
+                      type === 'conversation' ? 'user ' + name : '#' + name
                     }`}
                     className="border-0 border-none bg-zinc-200/90 px-14 py-6 text-zinc-600 focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-neutral-700/50 dark:text-zinc-200"
                   />
