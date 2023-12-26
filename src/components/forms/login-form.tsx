@@ -1,12 +1,14 @@
+import { toast } from 'sonner'
 import { signIn } from 'next-auth/react'
-import { useState } from 'react';
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { loginSchema, LoginSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ErrorToast } from '@/components/error-toast'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { LoadingOverlay } from '@/components/layout/loading-overlay';
+import { LoadingOverlay } from '@/components/loading-overlay'
 import {
   Form,
   FormControl,
@@ -36,7 +38,11 @@ function LoginForm({ switchModeHandler }: { switchModeHandler: () => void }) {
     })
     console.log(res)
     if (res && !res.error) router.replace('/')
-    else console.log(res?.error)
+    else {
+      if (res?.error === 'CredentialsSignin')
+        toast(<ErrorToast text="Invalid email or password" />)
+      else toast(<ErrorToast />)
+    }
     setIsLoading(false)
   }
 
@@ -82,7 +88,7 @@ function LoginForm({ switchModeHandler }: { switchModeHandler: () => void }) {
           <span>{`Don't have an account?`} </span>
           <button
             onClick={switchModeHandler}
-            className="text-blue-600 underline"
+            className="text-indigo-light underline"
           >
             Create account
           </button>

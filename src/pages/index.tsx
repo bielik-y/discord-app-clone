@@ -1,25 +1,39 @@
-import { getServerSession } from 'next-auth/next'
-import { GetServerSideProps } from 'next'
-import { authOptions } from './api/auth/[...nextauth]'
+import type { GetServerSideProps } from 'next'
+import { getServerSessionUser } from '@/lib/auth'
+import { InitialModal } from '@/components/modals/initial-modal'
+import { getFirstServer } from '@/lib/server'
 
 export default function Home() {
-  return <p>Protected Route</p>
+  return (
+    <div>
+      <InitialModal />
+    </div>
+  )
 }
 
-// Redirect user to /login if session doesn't exist
+// Redirect user to /auth if session doesn't exist
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { req, res } = context
-  const session = await getServerSession(req, res, authOptions)
-  if (!session) {
+  const user = await getServerSessionUser(req, res)
+  if (!user)
     return {
       redirect: {
         destination: '/auth',
         permanent: false
       }
     }
-  } else {
-    return {
-      props: {}
-    }
+  else {
+    const server = await getFirstServer(user.id)
+    if (server)
+      return {
+        redirect: {
+          destination: `/servers/${server.id}`,
+          permanent: false
+        }
+      }
+    else
+      return {
+        props: {}
+      }
   }
 }

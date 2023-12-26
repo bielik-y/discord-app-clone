@@ -1,11 +1,14 @@
 import axios from 'axios'
-import { useState } from 'react';
+import { toast } from 'sonner'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { registerSchema, RegisterSchema } from '@/lib/validations'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { LoadingOverlay } from '@/components/layout/loading-overlay';
+import { ErrorToast } from '@/components/error-toast'
+import { SuccessToast } from '@/components/success-toast'
+import { LoadingOverlay } from '@/components/loading-overlay'
 import {
   Form,
   FormControl,
@@ -32,19 +35,11 @@ function SignUpForm({ switchModeHandler }: { switchModeHandler: () => void }) {
   async function onSubmit(values: RegisterSchema) {
     try {
       setIsLoading(true)
-      const { data } = await axios.post('/api/auth/signup', values)
-      console.log('success', data)
+      await axios.post('/api/auth/signup', values)
+      toast(<SuccessToast />)
       switchModeHandler()
     } catch (err: any) {
-      if (err.response) {
-        console.log(err.response.data)
-        console.log(err.response.status)
-        console.log(err.response.headers)
-      } else if (err.request) {
-        console.log(err.request)
-      } else {
-        console.log(err.message)
-      }
+      toast(<ErrorToast error={err} />)
     } finally {
       setIsLoading(false)
     }
@@ -108,7 +103,7 @@ function SignUpForm({ switchModeHandler }: { switchModeHandler: () => void }) {
           <span>Already have an account? </span>
           <button
             onClick={switchModeHandler}
-            className="text-blue-600 underline"
+            className="text-indigo-light underline"
           >
             Log In
           </button>
