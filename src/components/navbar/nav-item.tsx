@@ -37,7 +37,7 @@ function NavItem({ serverId, imageUrl, name }: NavItemProps) {
               'rounded=[16px] bg-primary/10 text-primary'
           )}
         >
-          <Image fill src={imageUrl} alt="channel" />
+          <Image priority height={48} width={48} src={imageUrl} alt="channel"/>
         </div>
       </button>
     </ActionTooltip>
