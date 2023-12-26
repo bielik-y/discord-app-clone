@@ -53,13 +53,13 @@ function InviteModal() {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <LoadingOverlay loading={isLoading} />
       <DialogContent>
         <DialogHeader className="px-8 pt-8">
           <DialogTitle className="text-center text-2xl">
             Invite friends
           </DialogTitle>
         </DialogHeader>
+        <LoadingOverlay loading={isLoading} />
         <div className="p-6 pb-2">
           <Label className="text-xs font-bold uppercase text-indigo-dark dark:text-indigo-light">
             Server invite link

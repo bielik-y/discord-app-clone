@@ -40,7 +40,6 @@ function LeaveServerModal() {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <LoadingOverlay loading={isLoading} />
       <DialogContent>
         <DialogHeader className="px-8 pt-8">
           <DialogTitle className="text-center text-2xl">
@@ -51,6 +50,7 @@ function LeaveServerModal() {
             <span className="font-semibold text-indigo">{server?.name}</span> ?
           </DialogDescription>
         </DialogHeader>
+        <LoadingOverlay loading={isLoading} />
         <DialogFooter className="px-6 py-4">
           <div className="flex w-full items-center justify-between">
             <Button disabled={isLoading} variant="ghost" onClick={onClose}>
