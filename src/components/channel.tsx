@@ -55,11 +55,7 @@ function Channel({ params }: ChannelProps) {
 
   return (
     <div className="flex h-screen flex-col bg-white dark:bg-neutral-800">
-      <ChatHeader
-        serverId={params.serverId}
-        name={channel?.name}
-        type="channel"
-      />
+      <ChatHeader name={channel?.name} type="channel" />
       {channel.type === 'TEXT' && (
         <>
           <ChatMessages
@@ -86,18 +82,10 @@ function Channel({ params }: ChannelProps) {
         </>
       )}
       {channel.type === 'AUDIO' && (
-        <MediaRoom 
-          chatId={channel.id}
-          video={false}
-          audio={true}
-          />
+        <MediaRoom chatId={channel.id} video={false} audio={true} />
       )}
       {channel.type === 'VIDEO' && (
-        <MediaRoom 
-          chatId={channel.id}
-          video={true}
-          audio={true}
-          />
+        <MediaRoom chatId={channel.id} video={true} audio={true} />
       )}
     </div>
   )

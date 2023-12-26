@@ -1,13 +1,12 @@
 import { cn } from '@/lib/utils'
 import { Role } from '@prisma/client'
-import { Member, Server } from '@/types'
+import { Member } from '@/types'
 import { useServerStore } from '@/hooks/use-server-store'
 import { ShieldAlert, ShieldCheck } from 'lucide-react'
 import { UserAvatar } from '@/components/user-avatar'
 
 interface ServerMemberProps {
   member: Member
-  server: Server
   position: number
 }
 
@@ -17,7 +16,7 @@ const roleIconMap = {
   [Role.ADMIN]: <ShieldAlert className="ml-2 h-4 w-4 text-rose-500" />
 }
 
-function ServerMember({ member, server, position }: ServerMemberProps) {
+function ServerMember({ member, position }: ServerMemberProps) {
   const { currentMember, setMember } = useServerStore()
 
   const icon = roleIconMap[member.role]

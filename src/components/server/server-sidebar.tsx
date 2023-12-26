@@ -1,14 +1,15 @@
 import { Server } from '@/types'
 import { useSession } from 'next-auth/react'
-import { ServerHeader } from '@/components/server/server-header'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { ServerSearch } from '@/components/server/server-search'
 import { ChannelType, Role } from '@prisma/client'
-import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
-import ServerSection from '@/components/server/server-section'
-import { ServerChannel } from './server-channel'
-import { ServerMember } from './server-member'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { ServerSection } from '@/components/server/server-section'
+import { ServerChannel } from '@/components/server/server-channel'
+import { ServerHeader } from '@/components/server/server-header'
+import { ServerSearch } from '@/components/server/server-search'
+import { ServerMember } from '@/components/server/server-member'
+
+import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react'
 
 interface ServerSidebarProps {
   server: Server
@@ -99,7 +100,6 @@ function ServerSidebar({ server }: ServerSidebarProps) {
             <ServerSection
               sectionType="channels"
               label="Text channels"
-              channelType={ChannelType.TEXT}
               role={role}
             />
             <div className="space-y-[4px]">
@@ -119,7 +119,6 @@ function ServerSidebar({ server }: ServerSidebarProps) {
             <ServerSection
               sectionType="channels"
               label="Voice channels"
-              channelType={ChannelType.AUDIO}
               role={role}
             />
             <div className="space-y-[4px]">
@@ -139,7 +138,6 @@ function ServerSidebar({ server }: ServerSidebarProps) {
             <ServerSection
               sectionType="channels"
               label="Voice channels"
-              channelType={ChannelType.VIDEO}
               role={role}
             />
             <div className="space-y-[4px]">
@@ -156,14 +154,9 @@ function ServerSidebar({ server }: ServerSidebarProps) {
         )}
         {!!members?.length && (
           <div className="mb-2">
-            <ServerSection
-              sectionType="members"
-              label="Members"
-              role={role}
-              server={server}
-            />
+            <ServerSection sectionType="members" label="Members" role={role} />
             {members.map((member, index) => (
-              <ServerMember key={member.id} member={member} server={server} position={index}/>
+              <ServerMember key={member.id} member={member} position={index} />
             ))}
           </div>
         )}

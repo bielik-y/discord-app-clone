@@ -1,6 +1,5 @@
 import { Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
 import {
   CommandDialog,
   CommandEmpty,
@@ -28,8 +27,6 @@ interface ServerSearchProps {
 function ServerSearch({ data }: ServerSearchProps) {
   const [open, setOpen] = useState(false)
   const { setChannel, setMember } = useServerStore()
-  const router = useRouter()
-  const params = useParams()
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

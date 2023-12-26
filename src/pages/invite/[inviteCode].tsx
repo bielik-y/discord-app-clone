@@ -1,7 +1,6 @@
 import { getServerSessionUser } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { GetServerSideProps } from 'next'
-import { PathParamsContext } from 'next/dist/shared/lib/hooks-client-context.shared-runtime'
 
 interface InviteCodeProps {
   inviteCode: string

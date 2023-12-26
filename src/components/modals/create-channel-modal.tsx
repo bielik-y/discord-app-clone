@@ -22,9 +22,9 @@ function CreateChannelModal() {
 
   const isModalOpen = isOpen && type === 'createChannel'
 
-  const { server, updateServer, setChannel } = useServerStore()
+  const { server, updateServer } = useServerStore()
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const form = useForm({
     resolver: zodResolver(channelSchema),
     defaultValues: {
@@ -42,7 +42,7 @@ function CreateChannelModal() {
     setIsLoading(true)
     try {
       const url = qs.stringifyUrl({
-        url: "/api/server/channel",
+        url: '/api/server/channel',
         query: {
           serverId: server?.id
         }
@@ -66,7 +66,11 @@ function CreateChannelModal() {
           </DialogTitle>
         </DialogHeader>
         <LoadingOverlay loading={isLoading} />
-        <CreateChannelForm buttonText='Create' onSubmit={(values)=>handleSubmit(values)} form={form} />
+        <CreateChannelForm
+          buttonText="Create"
+          onSubmit={(values) => handleSubmit(values)}
+          form={form}
+        />
       </DialogContent>
     </Dialog>
   )

@@ -57,11 +57,7 @@ function Conversation({ params }: ConversationProps) {
 
   return (
     <div className="flex h-screen flex-col bg-white dark:bg-neutral-800">
-      <ChatHeader
-        serverId={params.serverId}
-        name={member?.user.username}
-        type="conversation"
-      />
+      <ChatHeader name={member?.user.username} type="conversation" />
       <ChatMessages
         member={currentMember}
         name={member.user.username}
@@ -76,13 +72,13 @@ function Conversation({ params }: ConversationProps) {
           conversationId: conversation.id
         }}
       />
-      <ChatInput 
-      name={member.user.username}
-      type='conversation'
-      apiUrl="/api/socket/direct-messages"
-      query={{
-        conversationId: conversation.id
-      }}
+      <ChatInput
+        name={member.user.username}
+        type="conversation"
+        apiUrl="/api/socket/direct-messages"
+        query={{
+          conversationId: conversation.id
+        }}
       />
     </div>
   )

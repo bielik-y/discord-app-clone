@@ -1,5 +1,5 @@
 import { NavSidebar } from '@/components/navbar/nav-sidebar'
-import { MobileToggle } from '../mobile-toggle'
+import { MobileToggle } from '@/components/mobile-toggle'
 
 function MainLayout({ children }: { children: React.ReactNode }) {
   return (
