@@ -13,13 +13,6 @@ I developed this project to strengthen my Next.js knowledge and recall key point
 - **shadcn/ui** (UI components)
 - **TailwindCSS** (Styling)
 
-## Demo
-
-At this moment project isn't deployed to anywhere but here is demonstrative gif with my interactions with app
-(speeded up)
-
-![Gif with my interactions wth app](demo.gif)
-
 ## Key Features
 
 - SignUp & SignIn with email & password
@@ -34,6 +27,17 @@ At this moment project isn't deployed to anywhere but here is demonstrative gif 
 - Fully responsive UI
 - Light / Dark mode switcher
 - Error handling on client and server
+
+## Demo
+
+You can check my demo [here](https://discord-app-clone-production.up.railway.app/).
+
+Note: I use free [PlanetScale](https://planetscale.com/) plan for my DB which causes database sleep after period of inactivity. So if you get a server error notification probably it's all about DB access.
+
+But here is demonstrative gif with my interactions with app if you wanna get a quick look.
+(speeded up)
+
+![Gif with my interactions with app](demo.gif)
 
 ## Setting up 
 
